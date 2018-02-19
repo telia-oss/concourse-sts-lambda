@@ -1,0 +1,20 @@
+[
+    {
+        "name": "<concourse-team>",
+        "keyId": "arn:aws:kms:eu-west-1:<account-id>:key/<key-id>",
+        "accounts": [
+            {
+                "name": "<account-short-name>",
+                "roleArn": "arn:aws:iam::<account-id>:role/<role-name>"
+            },
+            {
+                "name": "<account-short-name>",
+                "roleArn": "arn:aws:iam::<account-id>:role/<role-name>"
+            },
+            {
+                "name": "<account-short-name>",
+                "roleArn": "arn:aws:iam::<account-id>:role/<role-name>"
+            }
+        ]
+    }
+]

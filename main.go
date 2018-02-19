@@ -25,7 +25,7 @@ type Config struct {
 // Team represents a unit which requires dynamic credentials for one or more accounts.
 type Team struct {
 	Name     string     `json:"name"`
-	KmsKeyID string     `json:"kmsKeyId"`
+	KeyID    string     `json:"keyId"`
 	Accounts []*Account `json:"accounts"`
 }
 
@@ -51,7 +51,7 @@ func getS3Config(sess *session.Session, region, bucket, key string) (output []*T
 	defer res.Body.Close()
 
 	r := json.NewDecoder(res.Body)
-	if err := r.Decode(output); err != nil {
+	if err := r.Decode(&output); err != nil {
 		return nil, err
 	}
 
@@ -80,7 +80,7 @@ func writeCredentials(sess *session.Session, team *Team, account *Account, crede
 	// Access key
 	err := writeSecret(
 		client,
-		aws.String(team.KmsKeyID),
+		aws.String(team.KeyID),
 		aws.String(fmt.Sprintf("/concourse/%s/%s-access-key", team.Name, account.Name)),
 		credentials.AccessKeyId,
 	)
@@ -91,7 +91,7 @@ func writeCredentials(sess *session.Session, team *Team, account *Account, crede
 	// Secret key
 	err = writeSecret(
 		client,
-		aws.String(team.KmsKeyID),
+		aws.String(team.KeyID),
 		aws.String(fmt.Sprintf("/concourse/%s/%s-secret-key", team.Name, account.Name)),
 		credentials.SecretAccessKey,
 	)
@@ -102,7 +102,7 @@ func writeCredentials(sess *session.Session, team *Team, account *Account, crede
 	// Token
 	err = writeSecret(
 		client,
-		aws.String(team.KmsKeyID),
+		aws.String(team.KeyID),
 		aws.String(fmt.Sprintf("/concourse/%s/%s-session-token", team.Name, account.Name)),
 		credentials.SessionToken,
 	)
@@ -113,9 +113,9 @@ func writeCredentials(sess *session.Session, team *Team, account *Account, crede
 	// Expiration
 	err = writeSecret(
 		client,
-		aws.String(team.KmsKeyID),
+		aws.String(team.KeyID),
 		aws.String(fmt.Sprintf("/concourse/%s/%s-expiration", team.Name, account.Name)),
-		credentials.SecretAccessKey,
+		aws.String(credentials.Expiration.Format("2006-01-02 15:04")),
 	)
 	return err
 }
