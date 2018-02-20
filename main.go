@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/jessevdk/go-flags"
@@ -13,6 +12,7 @@ type Command struct {
 	Region string `long:"region" env:"REGION" default:"eu-west-1" description:"AWS region to use for API calls."`
 	Bucket string `long:"bucket" env:"CONFIG_BUCKET" default:"" description:"Config bucket name."`
 	Key    string `long:"key" env:"CONFIG_KEY" default:"" description:"Config bucket key."`
+	Path   string `long:"path" env:"SSM_PATH" default:"/concourse/{{.Team}}/{{.Account}}" description:"Path to use when writing to SSM."`
 }
 
 // Validate the Command options.
@@ -61,7 +61,10 @@ func Handler() error {
 				return errors.Wrapf(err, "failed to assume role: %s", account.RoleArn)
 			}
 
-			path := fmt.Sprintf("/concourse/%s/%s", team.Name, account.Name)
+			path, err := NewPath(team.Name, account.Name, command.Path).String()
+			if err != nil {
+				return errors.Wrap(err, "failed to parse secret path")
+			}
 			if err := manager.WriteCredentials(creds, path, team.KeyID); err != nil {
 				return errors.Wrap(err, "failed to write credentials: %s")
 			}
