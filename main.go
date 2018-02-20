@@ -21,7 +21,7 @@ func (c *Command) Validate() error {
 		return errors.New("missing CONFIG_REGION")
 	}
 	if c.Bucket == "" {
-		return errors.New("missing dCONFIG_BUCKET")
+		return errors.New("missing CONFIG_BUCKET")
 	}
 	if c.Key == "" {
 		return errors.New("missing CONFIG_KEY")
