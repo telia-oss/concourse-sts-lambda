@@ -5,9 +5,6 @@ import (
 	"text/template"
 )
 
-// Config is the configuration for the STS Lambda
-type Config []*Team
-
 // Team represents the configuration for a single CI/CD team.
 type Team struct {
 	Name     string     `json:"name"`

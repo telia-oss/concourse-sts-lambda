@@ -1,11 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
 	"github.com/aws/aws-sdk-go/service/sts"
@@ -15,7 +12,6 @@ import (
 // Manager handles API calls to AWS.
 type Manager struct {
 	ssmClient ssmiface.SSMAPI
-	s3Client  s3iface.S3API
 	stsClient stsiface.STSAPI
 	region    string
 }
@@ -24,7 +20,6 @@ type Manager struct {
 func NewManager(sess *session.Session, region string) *Manager {
 	config := &aws.Config{Region: aws.String(region)}
 	return &Manager{
-		s3Client:  s3.New(sess, config),
 		stsClient: sts.New(sess, config),
 		ssmClient: ssm.New(sess, config),
 		region:    region,
@@ -32,32 +27,12 @@ func NewManager(sess *session.Session, region string) *Manager {
 }
 
 // NewTestManager creates a new manager for testing purposes.
-func NewTestManager(s3 s3iface.S3API, sts stsiface.STSAPI, ssm ssmiface.SSMAPI) *Manager {
+func NewTestManager(sts stsiface.STSAPI, ssm ssmiface.SSMAPI) *Manager {
 	return &Manager{
-		s3Client:  s3,
 		stsClient: sts,
 		ssmClient: ssm,
 		region:    "eu-west-1",
 	}
-}
-
-// ReadConfig loads the config from S3.
-func (m *Manager) ReadConfig(bucket, key string) (output *Config, err error) {
-	res, err := m.s3Client.GetObject(&s3.GetObjectInput{
-		Bucket: aws.String(bucket),
-		Key:    aws.String(key),
-	})
-	if err != nil {
-		return nil, err
-	}
-	defer res.Body.Close()
-
-	r := json.NewDecoder(res.Body)
-	if err := r.Decode(&output); err != nil {
-		return nil, err
-	}
-
-	return output, nil
 }
 
 // AssumeRole on the given role ARN and the given team name (identifier).

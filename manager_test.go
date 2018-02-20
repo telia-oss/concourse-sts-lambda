@@ -88,13 +88,9 @@ var (
 		KeyID:    "key",
 		Accounts: []*pkg.Account{account},
 	}
-	config = pkg.Config{team}
 )
 
 func TestAssume(t *testing.T) {
-	s3Mock := &MockS3{
-		Error: false,
-	}
 	ssmMock := &MockSSM{
 		Error: false,
 	}
@@ -102,7 +98,7 @@ func TestAssume(t *testing.T) {
 		Error: false,
 	}
 
-	m := pkg.NewTestManager(s3Mock, stsMock, ssmMock)
+	m := pkg.NewTestManager(stsMock, ssmMock)
 
 	t.Run("Assume works", func(t *testing.T) {
 		expected := &sts.Credentials{
@@ -132,9 +128,6 @@ func TestAssume(t *testing.T) {
 }
 
 func TestWriteCredentials(t *testing.T) {
-	s3Mock := &MockS3{
-		Error: false,
-	}
 	ssmMock := &MockSSM{
 		Error: false,
 	}
@@ -142,7 +135,7 @@ func TestWriteCredentials(t *testing.T) {
 		Error: false,
 	}
 
-	m := pkg.NewTestManager(s3Mock, stsMock, ssmMock)
+	m := pkg.NewTestManager(stsMock, ssmMock)
 
 	input := &sts.Credentials{
 		AccessKeyId:     aws.String("accesskey"),
