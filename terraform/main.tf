@@ -6,15 +6,13 @@ data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
 module "sts-lambda" {
-  source = "./module"
+  source = "./modules/lambda"
 
-  prefix         = "assume-role"
-  zip_file       = "../main.zip"
-  ci_role_prefix = "machine-user"
-  ci_ssm_prefix  = "concourse"
-  config_region  = "${data.aws_region.current.name}"
-  config_bucket  = "<bucket>"
-  config_key     = "example.json"
+  prefix      = "assume-role"
+  zip_file    = "../main.zip"
+  role_prefix = "machine-user"
+  ssm_prefix  = "concourse"
+  region      = "${data.aws_region.current.name}"
 
   tags {
     environment = "dev"
@@ -50,6 +48,25 @@ data "aws_iam_policy_document" "assume" {
 resource "aws_iam_role_policy_attachment" "view_only_policy" {
   role       = "${aws_iam_role.main.name}"
   policy_arn = "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess"
+}
+
+# Each team will need their own Lambda trigger which is CRON triggered
+# and passes that teams configuration to the function when it's invoked.
+module "sts-lambda-trigger" {
+  source = "./modules/trigger"
+
+  prefix = "example-team"
+  lambda_arn = "${module.sts-lambda.function_arn}"
+  team_config = <<EOF
+{
+  "name": "example-team",
+  "keyId": "",
+  "accounts": [{
+    "name": "example-account",
+    "roleArn": ""
+  }]
+}
+EOF
 }
 
 output "lambda_arn" {

@@ -15,9 +15,8 @@ module "lambda" {
   runtime  = "go1.x"
 
   variables {
-    CONFIG_REGION = "${var.config_region}"
-    CONFIG_BUCKET = "${var.config_bucket}"
-    CONFIG_KEY    = "${var.config_key}"
+    REGION   = "${var.region}"
+    SSM_PATH = "/${var.ssm_prefix}/{{.Team}}/{{.Account}}"
   }
 
   tags {
@@ -35,7 +34,7 @@ data "aws_iam_policy_document" "lambda" {
     ]
 
     resources = [
-      "arn:aws:iam::*:role/${var.ci_role_prefix}*",
+      "arn:aws:iam::*:role/${var.role_prefix}*",
     ]
   }
 
@@ -57,23 +56,11 @@ data "aws_iam_policy_document" "lambda" {
     effect = "Allow"
 
     actions = [
-      "s3:GetObject",
-    ]
-
-    resources = [
-      "arn:aws:s3:::${var.config_bucket}/${var.config_key}*",
-    ]
-  }
-
-  statement {
-    effect = "Allow"
-
-    actions = [
       "ssm:PutParameter",
     ]
 
     resources = [
-      "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.ci_ssm_prefix}*",
+      "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.ssm_prefix}*",
     ]
   }
 
