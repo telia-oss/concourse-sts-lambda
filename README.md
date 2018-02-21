@@ -1,4 +1,4 @@
-## sts-lambda
+## concourse-sts-lambda
 
 Lambda function to rotate AWS credentials used by Concourse teams. See 
 the terraform subdirectory for an example that should work (with minimal effort).
