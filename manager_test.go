@@ -2,13 +2,13 @@ package main_test
 
 import (
 	"errors"
+	pkg "github.com/TeliaSoneraNorge/concourse-sts-lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
 	"github.com/aws/aws-sdk-go/service/sts"
 	"github.com/aws/aws-sdk-go/service/sts/stsiface"
-	pkg "github.com/itsdalmo/sts-lambda"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

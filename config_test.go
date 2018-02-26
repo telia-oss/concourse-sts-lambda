@@ -2,7 +2,7 @@ package main_test
 
 import (
 	"encoding/json"
-	pkg "github.com/itsdalmo/sts-lambda"
+	pkg "github.com/TeliaSoneraNorge/concourse-sts-lambda"
 	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
