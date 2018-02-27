@@ -3,7 +3,7 @@ sudo: false
 matrix:
   include:
   - os: linux
-    go: 1.9.x
+    go: 1.10.x
     env:
     - TARGET=linux
     - ARCH=amd64
