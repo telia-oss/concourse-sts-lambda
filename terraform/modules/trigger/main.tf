@@ -2,7 +2,7 @@
 # Resources
 # ------------------------------------------------------------------------------
 resource "aws_cloudwatch_event_rule" "main" {
-  name                = "${var.prefix}-cron-trigger"
+  name                = "${var.prefix}-sts-cron-trigger"
   description         = "STS Lambda team configuration and trigger."
   schedule_expression = "rate(30 minutes)"
 }
@@ -14,7 +14,7 @@ resource "aws_cloudwatch_event_target" "main" {
 }
 
 resource "aws_lambda_permission" "main" {
-  statement_id  = "${var.prefix}-lambda-permission"
+  statement_id  = "${var.prefix}-sts-lambda-permission"
   action        = "lambda:InvokeFunction"
   function_name = "${var.lambda_arn}"
   principal     = "events.amazonaws.com"
