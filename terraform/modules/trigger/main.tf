@@ -2,7 +2,7 @@
 # Resources
 # ------------------------------------------------------------------------------
 resource "aws_cloudwatch_event_rule" "main" {
-  name                = "${var.prefix}-sts-cron-trigger"
+  name                = "${var.prefix}-sts-${substr(md5(var.team_config), 0, 7)}"
   description         = "STS Lambda team configuration and trigger."
   schedule_expression = "rate(30 minutes)"
 }
