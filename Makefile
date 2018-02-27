@@ -22,7 +22,7 @@ test:
 clean:
 	@echo "== Cleaning =="
 	rm main
-	rm main.zip
+	rm concourse-sts-lambda.zip
 
 lint:
 	@echo "== Lint =="
@@ -30,9 +30,9 @@ lint:
 
 release: build-release
 	@echo "== Release build =="
-	zip main.zip main
+	zip concourse-sts-lambda.zip main
 
-build-release:
+build-release: test
 	CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=$(ARCH) go build -o $(BINARY_NAME) -v
 
 .PHONY: default build test release build-release

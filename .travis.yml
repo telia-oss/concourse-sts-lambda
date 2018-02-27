@@ -1,0 +1,22 @@
+language: go
+sudo: false
+matrix:
+  include:
+  - os: linux
+    go: 1.9.x
+    env:
+    - TARGET=linux
+    - ARCH=amd64
+notifications:
+  email: false
+script:
+- make release
+deploy:
+  provider: releases
+  api_key:
+    secure: nirsFIP2+/ZtJQ0JI5xBc0FBDfvdOZi6/qjsjjA07GluxSQPwL/2ZDOu5UYb3KXZimukOwYvoihnbMStywIw4IAmeUGjHejSQP/iu0FJNU3vp0/ud04e7Vq78/2doYvM0t0oSwL5vrr1NjrlAmQfICgyOik7ZikdjoaX5mSw/WYuc4ByKNFqjlg4rxSF5zYtUSxc/KylvrWt7E0DzsWQHo1FHH/JB8itZHcp4L++RwLffpN2ybHMbuTbHOuNh3Um/H3NmjjCnUwXRo72qDCkQHcMZ14BEoLJi/6KvAexP+6XMXx41B9NUCcUG0Sv7HmWV2RQ+JINtQtLNWbIYNZCDlU4vRkOyGL2xJjm/iCsZz/XqlH2c8ewWZMSP5jg2ZRQhm5aech2TvodCJIwxhy5stds4GjpensAlSYO/HFso9UtgYf0MIP89eFFm4Mghsz0WpkEusn1VGPHdNXZM1l7e3KqjXobuns9mpfjIg61AXsYlPf90TzHX7Vu1Fs0aR5A47RcWTYW5ChgnqJlH31j042+FyQQzN/MBg/i2xCXExg1Cu1WNLz3L23Sle9BCTuYtDM8xd0rXRItHFO/CpNcTWY9mAEarGu90Fif98sCYxU+LLaWVGBYxZuBdpNXXIsHSBM6QHHXoz7HE+YpmQZ17/Je1g51jRHT/jAOE/f+h+E=
+  file: concourse-sts-lambda.zip
+  skip_cleanup: true
+  on:
+    repo: TeliaSoneraNorge/concourse-sts-lambda
+    tags: true
