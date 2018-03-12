@@ -5,6 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/jessevdk/go-flags"
 	"github.com/pkg/errors"
+	"log"
 )
 
 // Command options
@@ -43,15 +44,18 @@ func Handler(team Team) error {
 	for _, account := range team.Accounts {
 		creds, err := manager.AssumeRole(account.RoleArn, team.Name)
 		if err != nil {
-			return errors.Wrapf(err, "failed to assume role: %s", account.RoleArn)
+			log.Printf("failed to assume role (%s): %s", account.RoleArn, err)
+			continue
 		}
 
 		path, err := NewPath(team.Name, account.Name, command.Path).String()
 		if err != nil {
-			return errors.Wrap(err, "failed to parse secret path")
+			log.Printf("failed to parse secret path: %s", err)
+			continue
 		}
 		if err := manager.WriteCredentials(creds, path, team.KeyID); err != nil {
-			return errors.Wrap(err, "failed to write credentials: %s")
+			log.Printf("failed to write credentials: %s", err)
+			continue
 		}
 	}
 
