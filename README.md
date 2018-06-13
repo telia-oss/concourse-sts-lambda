@@ -1,6 +1,6 @@
 ## concourse-sts-lambda
 
-[![Build Status](https://travis-ci.org/TeliaSoneraNorge/concourse-sts-lambda.svg?branch=master)](https://travis-ci.org/TeliaSoneraNorge/concourse-sts-lambda)
+[![Build Status](https://travis-ci.org/telia-oss/concourse-sts-lambda.svg?branch=master)](https://travis-ci.org/telia-oss/concourse-sts-lambda)
 
 Lambda function to rotate AWS credentials used by Concourse teams. See 
 the terraform subdirectory for an example that should work (with minimal effort).

@@ -2,7 +2,9 @@ package main_test
 
 import (
 	"errors"
-	pkg "github.com/TeliaSoneraNorge/concourse-sts-lambda"
+	"testing"
+	"time"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 	"github.com/aws/aws-sdk-go/service/ssm"
@@ -10,8 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/sts"
 	"github.com/aws/aws-sdk-go/service/sts/stsiface"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
+	pkg "github.com/telia-oss/concourse-sts-lambda"
 )
 
 type MockS3 struct {

@@ -2,10 +2,11 @@ package main_test
 
 import (
 	"encoding/json"
-	pkg "github.com/TeliaSoneraNorge/concourse-sts-lambda"
-	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	pkg "github.com/telia-oss/concourse-sts-lambda"
 )
 
 func TestConfig(t *testing.T) {

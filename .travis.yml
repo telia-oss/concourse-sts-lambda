@@ -18,5 +18,5 @@ deploy:
   file: concourse-sts-lambda.zip
   skip_cleanup: true
   on:
-    repo: TeliaSoneraNorge/concourse-sts-lambda
+    repo: telia-oss/concourse-sts-lambda
     tags: true
