@@ -38,7 +38,7 @@ Be in the root directory:
 make release
 ```
 
-You should now have a zipped Lambda function. Next, edit [terraform/main.tf](./terraform/main.tf)
+You should now have a zipped Lambda function. Next, edit [terraform/example.tf](./terraform/example.tf)
 to your liking. When done, be in the terraform directory:
 
 ```bash
@@ -67,7 +67,6 @@ When the function is triggered with this input it will assume the
 - `/concourse/example-team/divx-lab-access-key`
 - `/concourse/example-team/divx-lab-secret-key`
 - `/concourse/example-team/divx-lab-session-token`
-- `/concourse/example-team/divx-lab-expiration`
 
 Note that you can have multiple accounts, in which case the account
-name must be unique to avoid overwriting the secrets in SSM.
+name must be unique to avoid overwriting the secrets in Secrets manager.

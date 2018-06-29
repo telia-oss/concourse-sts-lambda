@@ -5,13 +5,17 @@ SRC=$(shell find . -type f -name '*.go' -not -path "./vendor/*")
 
 default: test
 
+generate:
+	@echo "== Go Generate =="
+	go generate ./...
+
 run: test
 	@echo "== Run =="
-	go run main.go
+	go run cmd/main.go
 
 build: test
 	@echo "== Build =="
-	go build -o $(BINARY_NAME) -v
+	go build -o $(BINARY_NAME) -v cmd/main.go
 
 test:
 	@echo "== Test =="
@@ -33,6 +37,6 @@ release: build-release
 	zip concourse-sts-lambda.zip main
 
 build-release: test
-	CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=$(ARCH) go build -o $(BINARY_NAME) -v
+	CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=$(ARCH) go build -o $(BINARY_NAME) -v cmd/main.go
 
-.PHONY: default build test release build-release
+.PHONY: default build test release build-release generate
