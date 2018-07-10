@@ -22,7 +22,7 @@ func New(manager *Manager, secretTemplate string, logger *logrus.Logger) func(Te
 				log.WithFields(logrus.Fields{"role": account.Name}).Warnf("failed to assume role: %s", err)
 				continue
 			}
-			if err := manager.WriteCredentials(creds, path, team.KeyID); err != nil {
+			if err := manager.WriteCredentials(creds, path); err != nil {
 				log.WithFields(logrus.Fields{"role": account.Name}).Warnf("failed to write credentials: %s", err)
 				continue
 			}

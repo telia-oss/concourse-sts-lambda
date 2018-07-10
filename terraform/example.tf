@@ -57,7 +57,6 @@ module "sts-lambda-trigger" {
   team_config = <<EOF
 {
   "name": "example-team",
-  "keyId": "",
   "accounts": [{
     "name": "example-account",
     "roleArn": "${aws_iam_role.main.arn}"

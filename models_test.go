@@ -13,7 +13,6 @@ func TestConfig(t *testing.T) {
 	input := strings.TrimSpace(`
 {
     "name": "team",
-    "keyId": "key",
     "accounts": [
 	{
 	    "name": "account",
@@ -25,8 +24,7 @@ func TestConfig(t *testing.T) {
 
 	t.Run("Unmarshal works as intended", func(t *testing.T) {
 		expected := handler.Team{
-			Name:  "team",
-			KeyID: "key",
+			Name: "team",
 			Accounts: []*handler.Account{
 				{
 					Name:    "account",

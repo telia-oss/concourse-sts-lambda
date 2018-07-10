@@ -8,7 +8,6 @@ import (
 // Team represents the configuration for a single CI/CD team.
 type Team struct {
 	Name     string     `json:"name"`
-	KeyID    string     `json:"keyId"`
 	Accounts []*Account `json:"accounts"`
 }
 

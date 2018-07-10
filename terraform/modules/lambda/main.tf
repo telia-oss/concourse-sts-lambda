@@ -53,6 +53,8 @@ data "aws_iam_policy_document" "lambda" {
     ]
   }
 
+  // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_CreateSecret.html
+  // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_PutSecretValue.html
   statement {
     effect = "Allow"
 
@@ -63,21 +65,6 @@ data "aws_iam_policy_document" "lambda" {
 
     resources = [
       "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:/${var.secrets_manager_prefix}/*",
-    ]
-  }
-
-  // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_CreateSecret.html
-  // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_PutSecretValue.html
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "kms:GenerateDataKey",
-      "kms:Decrypt",
-    ]
-
-    resources = [
-      "*",
     ]
   }
 }
