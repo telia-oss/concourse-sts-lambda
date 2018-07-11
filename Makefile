@@ -2,6 +2,7 @@ BINARY_NAME=main
 TARGET ?= linux
 ARCH ?= amd64
 SRC=$(shell find . -type f -name '*.go' -not -path "./vendor/*")
+DIR=$(shell pwd)
 
 default: test
 
@@ -17,26 +18,52 @@ build: test
 	@echo "== Build =="
 	go build -o $(BINARY_NAME) -v cmd/main.go
 
-test:
+clean:
+	@echo "== Cleaning =="
+	rm $(BINARY_NAME) || true
+	rm concourse-sts-lambda.zip || true
+
+release:
+	@echo "== Release build =="
+	CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=$(ARCH) go build -o $(BINARY_NAME) -v cmd/main.go
+	zip concourse-sts-lambda.zip main
+
+test-code:
 	@echo "== Test =="
 	gofmt -s -l -w $(SRC)
 	go vet -v ./...
 	go test -race -v ./...
 
-clean:
-	@echo "== Cleaning =="
-	rm main
-	rm concourse-sts-lambda.zip
+test: test-code
+	@echo "== Terraform tests =="
+	@cd terraform; \
+	if ! terraform fmt -write=false -check=true >> /dev/null; then \
+		echo "✗ terraform fmt (Some files need to be formatted, run 'terraform fmt' to fix.)"; \
+		exit 1; \
+	fi
+	@echo "√ terraform fmt"
+	@cd $(DIR)
 
-lint:
-	@echo "== Lint =="
-	golint
+	@for d in $$(find . -type f -name '*.tf' -path "./terraform/modules/*" -not -path "**/.terraform/*" -exec dirname {} \; | sort -u); do \
+		cd $$d; \
+		terraform init -backend=false >> /dev/null; \
+		terraform validate -check-variables=false; \
+		if [ $$? -eq 1 ]; then \
+			echo "✗ terraform validate failed: $$d"; \
+			exit 1; \
+		fi; \
+		cd $(DIR); \
+	done
+	@echo "√ terraform validate modules (not including variables)"; \
 
-release: build-release
-	@echo "== Release build =="
-	zip concourse-sts-lambda.zip main
+	@cd terraform; \
+	terraform init -backend=false >> /dev/null; \
+	terraform validate; \
+	if [ $$? -eq 1 ]; then \
+		echo "✗ terraform validate failed: $$d"; \
+		exit 1; \
+	fi
+	@echo "√ terraform validate example"
+	@cd $(DIR)
 
-build-release: test
-	CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=$(ARCH) go build -o $(BINARY_NAME) -v cmd/main.go
-
-.PHONY: default build test release build-release generate
+.PHONY: default build test release test-code generate
