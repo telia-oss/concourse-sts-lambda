@@ -5,10 +5,6 @@ data "aws_region" "current" {}
 
 data "aws_caller_identity" "current" {}
 
-data "aws_kms_alias" "default" {
-  name = "alias/aws/secretsmanager"
-}
-
 module "lambda" {
   source  = "telia-oss/lambda/aws"
   version = "0.2.0"
@@ -22,7 +18,6 @@ module "lambda" {
   environment {
     REGION               = "${data.aws_region.current.name}"
     SECRETS_MANAGER_PATH = "/${var.secrets_manager_prefix}/{{.Team}}/{{.Account}}"
-    KMS_KEY_ARN          = "${var.kms_key_arn}"
   }
 
   tags = "${var.tags}"
@@ -67,19 +62,6 @@ data "aws_iam_policy_document" "lambda" {
 
     resources = [
       "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:/${var.secrets_manager_prefix}/*",
-    ]
-  }
-
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "kms:Decrypt",
-      "kms:GenerateDataKey",
-    ]
-
-    resources = [
-      "${var.kms_key_arn == "" ? data.aws_kms_alias.default.target_key_arn : var.kms_key_arn}",
     ]
   }
 }
