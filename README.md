@@ -46,6 +46,8 @@ terraform init
 terraform apply
 ```
 
+NOTE: The `aws/secretsmanager` KMS Key Alias has to be created/exist before the lambda is deployed.
+
 ### Team configuration
 
 Example configuration for a Team (which is then passed as input in the CloudWatch event rule):
@@ -53,7 +55,6 @@ Example configuration for a Team (which is then passed as input in the CloudWatc
 ```json
 {
   "name": "example-team",
-  "keyId": "arn:aws:kms:eu-west-1:123456789999:key/fa8eb753-4feb-2c59-b142-03822ca35dbb",
   "accounts": [{
     "name": "divx-lab",
     "roleArn": "arn:aws:iam::123456789999:role/machine-user-example"
