@@ -7,7 +7,7 @@ data "aws_caller_identity" "current" {}
 
 module "lambda" {
   source  = "telia-oss/lambda/aws"
-  version = "0.1.0"
+  version = "0.2.0"
 
   name_prefix = "${var.name_prefix}"
   filename    = "${var.filename}"
@@ -15,15 +15,12 @@ module "lambda" {
   handler     = "main"
   runtime     = "go1.x"
 
-  variables {
+  environment {
     REGION               = "${data.aws_region.current.name}"
     SECRETS_MANAGER_PATH = "/${var.secrets_manager_prefix}/{{.Team}}/{{.Account}}"
   }
 
-  tags {
-    environment = "dev"
-    terraform   = "True"
-  }
+  tags = "${var.tags}"
 }
 
 data "aws_iam_policy_document" "lambda" {
