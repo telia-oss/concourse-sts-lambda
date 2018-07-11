@@ -13,8 +13,9 @@ import (
 
 // Command options
 type Command struct {
-	Region string `long:"region" env:"REGION" description:"AWS region to use for API calls."`
-	Path   string `long:"secrets-manager-path" env:"SECRETS_MANAGER_PATH" default:"/concourse/{{.Team}}/{{.Account}}" description:"Path to use when writing to AWS Secrets manager."`
+	Region   string `long:"region" env:"REGION" description:"AWS region to use for API calls."`
+	Path     string `long:"secrets-manager-path" env:"SECRETS_MANAGER_PATH" default:"/concourse/{{.Team}}/{{.Account}}" description:"Path to use when writing to AWS Secrets manager."`
+	KmsKeyID string `long:"kms-key-id" env:"KMS_KEY_ID" default:"" description:"KMS Key ID (or ALIAS/ARN) used to encrypt the secrets."`
 }
 
 // Validate the Command options.
@@ -43,6 +44,6 @@ func main() {
 	logger := logrus.New()
 	logger.Formatter = &logrus.JSONFormatter{}
 
-	f := handler.New(handler.NewManager(sess, command.Region), command.Path, logger)
+	f := handler.New(handler.NewManager(sess, command.Region), command.Path, command.KmsKeyID, logger)
 	lambda.Start(f)
 }

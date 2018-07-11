@@ -56,7 +56,7 @@ func (m *Manager) AssumeRole(arn, team string) (*sts.Credentials, error) {
 }
 
 // WriteCredentials handles writing a set of Credentials to the parameter store.
-func (m *Manager) WriteCredentials(creds *sts.Credentials, path string) error {
+func (m *Manager) WriteCredentials(creds *sts.Credentials, path, kmsKeyID string) error {
 	values := map[string]string{
 		path + "-access-key":    aws.StringValue(creds.AccessKeyId),
 		path + "-secret-key":    aws.StringValue(creds.SecretAccessKey),
@@ -64,7 +64,7 @@ func (m *Manager) WriteCredentials(creds *sts.Credentials, path string) error {
 	}
 
 	for name, value := range values {
-		err := m.writeSecret(name, value)
+		err := m.writeSecret(name, value, kmsKeyID)
 		if err != nil {
 			return err
 		}
@@ -72,14 +72,18 @@ func (m *Manager) WriteCredentials(creds *sts.Credentials, path string) error {
 	return nil
 }
 
-func (m *Manager) writeSecret(name, secret string) error {
+func (m *Manager) writeSecret(name, secret, kmsKeyID string) error {
 	var err error
 
-	// Fewer API calls to naively try to create it and handle the error.
-	_, err = m.secretsClient.CreateSecret(&secretsmanager.CreateSecretInput{
+	input := &secretsmanager.CreateSecretInput{
 		Name:        aws.String(name),
 		Description: aws.String("Lambda created secret for Concourse."),
-	})
+	}
+	if kmsKeyID != "" {
+		input.KmsKeyId = aws.String(kmsKeyID)
+	}
+	// Fewer API calls to naively try to create it and handle the error.
+	_, err = m.secretsClient.CreateSecret(input)
 	if err != nil {
 		e, ok := err.(awserr.Error)
 		if !ok {

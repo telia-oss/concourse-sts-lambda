@@ -9,6 +9,11 @@ variable "filename" {
   description = "Path to .zip file containing the handler. (I.e., output of make release)"
 }
 
+variable "kms_key_arn" {
+  description = "ARN of the AWS KMS customer master key (CMK) to be used to encrypt the secret values. Defaults to the aws/secretsmanager alias."
+  default     = ""
+}
+
 variable "role_prefix" {
   description = "Prefix of CI roles which the Lambda function will be allowed to assume. (should be the same in all accounts)."
 }

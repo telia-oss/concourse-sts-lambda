@@ -5,7 +5,7 @@ import (
 )
 
 // New lambda handler with the provided settings.
-func New(manager *Manager, secretTemplate string, logger *logrus.Logger) func(Team) error {
+func New(manager *Manager, secretTemplate, kmsKeyID string, logger *logrus.Logger) func(Team) error {
 	return func(team Team) error {
 		log := logger.WithFields(logrus.Fields{"team": team.Name})
 
@@ -22,7 +22,7 @@ func New(manager *Manager, secretTemplate string, logger *logrus.Logger) func(Te
 				log.WithFields(logrus.Fields{"role": account.Name}).Warnf("failed to assume role: %s", err)
 				continue
 			}
-			if err := manager.WriteCredentials(creds, path); err != nil {
+			if err := manager.WriteCredentials(creds, path, kmsKeyID); err != nil {
 				log.WithFields(logrus.Fields{"role": account.Name}).Warnf("failed to write credentials: %s", err)
 				continue
 			}

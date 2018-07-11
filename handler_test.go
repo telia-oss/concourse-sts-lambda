@@ -39,6 +39,7 @@ func TestHandler(t *testing.T) {
 		description       string
 		path              string
 		team              handler.Team
+		key               string
 		stsOutput         *sts.AssumeRoleOutput
 		stsError          error
 		putSecretError    error
@@ -49,6 +50,7 @@ func TestHandler(t *testing.T) {
 			description:       "assumes a role and writes the secrets",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
 			team:              team,
+			key:               "key",
 			stsOutput:         creds,
 			stsError:          nil,
 			createSecretError: nil,
@@ -59,6 +61,7 @@ func TestHandler(t *testing.T) {
 			description:       "continues if it fails to assume role",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
 			team:              team,
+			key:               "key",
 			stsOutput:         nil,
 			stsError:          errors.New("test-error"),
 			createSecretError: nil,
@@ -69,6 +72,7 @@ func TestHandler(t *testing.T) {
 			description:       "continues if it fails create secret",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
 			team:              team,
+			key:               "key",
 			stsOutput:         creds,
 			stsError:          nil,
 			createSecretError: errors.New("test-error"),
@@ -79,6 +83,7 @@ func TestHandler(t *testing.T) {
 			description:       "continues if it fails write secret",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
 			team:              team,
+			key:               "key",
 			stsOutput:         creds,
 			stsError:          nil,
 			createSecretError: nil,
@@ -89,6 +94,7 @@ func TestHandler(t *testing.T) {
 			description:       "does not error if the secret already exists",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
 			team:              team,
+			key:               "key",
 			stsOutput:         creds,
 			stsError:          nil,
 			createSecretError: awserr.New(secretsmanager.ErrCodeResourceExistsException, "", errors.New("test-error")),
@@ -121,7 +127,7 @@ func TestHandler(t *testing.T) {
 			}
 
 			logger, _ := logrus.NewNullLogger()
-			handle := handler.New(handler.NewTestManager(secrets, sts), tc.path, logger)
+			handle := handler.New(handler.NewTestManager(secrets, sts), tc.path, tc.key, logger)
 
 			if err := handle(tc.team); err != nil {
 				t.Fatalf("unexpected error: %s", err)
