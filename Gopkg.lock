@@ -50,12 +50,6 @@
   version = "v1.14.16"
 
 [[projects]]
-  name = "github.com/davecgh/go-spew"
-  packages = ["spew"]
-  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
-  version = "v1.1.0"
-
-[[projects]]
   name = "github.com/go-ini/ini"
   packages = ["."]
   revision = "32e4c1e6bc4e7d0d8451aa6b75200d19e37a536a"
@@ -79,12 +73,6 @@
   revision = "0b12d6b5"
 
 [[projects]]
-  name = "github.com/pmezard/go-difflib"
-  packages = ["difflib"]
-  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
-  version = "v1.0.0"
-
-[[projects]]
   name = "github.com/sirupsen/logrus"
   packages = [
     ".",
@@ -92,12 +80,6 @@
   ]
   revision = "c155da19408a8799da419ed3eeb0cb5db0ad5dbc"
   version = "v1.0.5"
-
-[[projects]]
-  name = "github.com/stretchr/testify"
-  packages = ["assert"]
-  revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
-  version = "v1.2.1"
 
 [[projects]]
   branch = "master"
@@ -123,6 +105,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e0d0792f2218fbc35317147869fb6af103974452b7c7208e32c8d866f6d7f51b"
+  inputs-digest = "2a28b1d3a0910448cbfa3b5c9cc1e3c2b26e932d8765c449a5a1af85cde847de"
   solver-name = "gps-cdcl"
   solver-version = 1
