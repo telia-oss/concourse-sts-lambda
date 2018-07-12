@@ -112,11 +112,11 @@ func TestHandler(t *testing.T) {
 				if tc.createSecretError != nil {
 					if e, ok := tc.createSecretError.(awserr.Error); ok {
 						if e.Code() == secretsmanager.ErrCodeResourceExistsException {
-							secrets.EXPECT().PutSecretValue(gomock.Any()).MinTimes(1).Return(nil, tc.putSecretError)
+							secrets.EXPECT().UpdateSecret(gomock.Any()).MinTimes(1).Return(nil, tc.putSecretError)
 						}
 					}
 				} else {
-					secrets.EXPECT().PutSecretValue(gomock.Any()).MinTimes(1).Return(nil, tc.putSecretError)
+					secrets.EXPECT().UpdateSecret(gomock.Any()).MinTimes(1).Return(nil, tc.putSecretError)
 				}
 			}
 

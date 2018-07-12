@@ -51,13 +51,13 @@ data "aws_iam_policy_document" "lambda" {
   }
 
   // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_CreateSecret.html
-  // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_PutSecretValue.html
+  // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_UpdateSecret.html
   statement {
     effect = "Allow"
 
     actions = [
       "secretsmanager:CreateSecret",
-      "secretsmanager:PutSecretValue",
+      "secretsmanager:UpdateSecret",
     ]
 
     resources = [
