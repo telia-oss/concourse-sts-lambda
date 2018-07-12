@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -74,11 +75,12 @@ func (m *Manager) WriteCredentials(creds *sts.Credentials, path string) error {
 
 func (m *Manager) writeSecret(name, secret string) error {
 	var err error
+	timestamp := time.Now().Format(time.RFC3339)
 
 	// Fewer API calls to naively try to create it and handle the error.
 	_, err = m.secretsClient.CreateSecret(&secretsmanager.CreateSecretInput{
 		Name:        aws.String(name),
-		Description: aws.String("Lambda created secret for Concourse."),
+		Description: aws.String(fmt.Sprintf("STS Credentials for Concourse. Last updated: %s", timestamp)),
 	})
 	if err != nil {
 		e, ok := err.(awserr.Error)
