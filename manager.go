@@ -1,38 +1,44 @@
-package main
+package handler
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/ssm"
-	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
+	"github.com/aws/aws-sdk-go/service/secretsmanager"
+	"github.com/aws/aws-sdk-go/service/secretsmanager/secretsmanageriface"
 	"github.com/aws/aws-sdk-go/service/sts"
 	"github.com/aws/aws-sdk-go/service/sts/stsiface"
 )
 
+// SecretsManager for testing purposes.
+//go:generate mockgen -destination=mocks/mock_secretsmanager.go -package=mocks github.com/telia-oss/concourse-sts-lambda SecretsManager
+type SecretsManager secretsmanageriface.SecretsManagerAPI
+
+// STSManager for testing purposes.
+//go:generate mockgen -destination=mocks/mock_stsmanager.go -package=mocks github.com/telia-oss/concourse-sts-lambda STSManager
+type STSManager stsiface.STSAPI
+
 // Manager handles API calls to AWS.
 type Manager struct {
-	ssmClient ssmiface.SSMAPI
-	stsClient stsiface.STSAPI
-	region    string
+	secretsClient SecretsManager
+	stsClient     STSManager
 }
 
 // NewManager creates a new manager from a session and region string.
 func NewManager(sess *session.Session, region string) *Manager {
 	config := &aws.Config{Region: aws.String(region)}
 	return &Manager{
-		stsClient: sts.New(sess, config),
-		ssmClient: ssm.New(sess, config),
-		region:    region,
+		stsClient:     sts.New(sess, config),
+		secretsClient: secretsmanager.New(sess, config),
 	}
 }
 
-// NewTestManager creates a new manager for testing purposes.
-func NewTestManager(sts stsiface.STSAPI, ssm ssmiface.SSMAPI) *Manager {
-	return &Manager{
-		stsClient: sts,
-		ssmClient: ssm,
-		region:    "eu-west-1",
-	}
+// NewTestManager ...
+func NewTestManager(s SecretsManager, t STSManager) *Manager {
+	return &Manager{secretsClient: s, stsClient: t}
 }
 
 // AssumeRole on the given role ARN and the given team name (identifier).
@@ -51,16 +57,15 @@ func (m *Manager) AssumeRole(arn, team string) (*sts.Credentials, error) {
 }
 
 // WriteCredentials handles writing a set of Credentials to the parameter store.
-func (m *Manager) WriteCredentials(creds *sts.Credentials, path, key string) error {
+func (m *Manager) WriteCredentials(creds *sts.Credentials, path string) error {
 	values := map[string]string{
 		path + "-access-key":    aws.StringValue(creds.AccessKeyId),
 		path + "-secret-key":    aws.StringValue(creds.SecretAccessKey),
 		path + "-session-token": aws.StringValue(creds.SessionToken),
-		path + "-expiration":    creds.Expiration.Format("2006-01-02 15:04"),
 	}
 
 	for name, value := range values {
-		err := m.writeSecret(name, value, key)
+		err := m.writeSecret(name, value)
 		if err != nil {
 			return err
 		}
@@ -68,14 +73,29 @@ func (m *Manager) WriteCredentials(creds *sts.Credentials, path, key string) err
 	return nil
 }
 
-func (m *Manager) writeSecret(name, value, key string) error {
-	input := &ssm.PutParameterInput{
-		Name:      aws.String(name),
-		Value:     aws.String(value),
-		KeyId:     aws.String(key),
-		Type:      aws.String("SecureString"),
-		Overwrite: aws.Bool(true),
+func (m *Manager) writeSecret(name, secret string) error {
+	var err error
+	// Fewer API calls to naively try to create it and handle the error.
+	_, err = m.secretsClient.CreateSecret(&secretsmanager.CreateSecretInput{
+		Name:        aws.String(name),
+		Description: aws.String("STS Credentials for Concourse."),
+	})
+	if err != nil {
+		e, ok := err.(awserr.Error)
+		if !ok {
+			return fmt.Errorf("failed to convert error: %s", err)
+		}
+		if e.Code() != secretsmanager.ErrCodeResourceExistsException {
+			return err
+		}
 	}
-	_, err := m.ssmClient.PutParameter(input)
+
+	timestamp := time.Now().Format(time.RFC3339)
+
+	_, err = m.secretsClient.UpdateSecret(&secretsmanager.UpdateSecretInput{
+		Description:  aws.String(fmt.Sprintf("STS Credentials for Concourse. Last updated: %s", timestamp)),
+		SecretId:     aws.String(name),
+		SecretString: aws.String(secret),
+	})
 	return err
 }
