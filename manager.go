@@ -27,7 +27,7 @@ type Manager struct {
 	stsClient     STSManager
 }
 
-// NewManager creates a new manager from a session and region string.
+// NewManager creates a new manager from an existing AWS session.
 func NewManager(sess *session.Session) *Manager {
 	return &Manager{
 		stsClient:     sts.New(sess),
