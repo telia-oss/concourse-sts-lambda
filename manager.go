@@ -28,11 +28,10 @@ type Manager struct {
 }
 
 // NewManager creates a new manager from a session and region string.
-func NewManager(sess *session.Session, region string) *Manager {
-	config := &aws.Config{Region: aws.String(region)}
+func NewManager(sess *session.Session) *Manager {
 	return &Manager{
-		stsClient:     sts.New(sess, config),
-		secretsClient: secretsmanager.New(sess, config),
+		stsClient:     sts.New(sess),
+		secretsClient: secretsmanager.New(sess),
 	}
 }
 
