@@ -16,7 +16,6 @@ module "lambda" {
   runtime     = "go1.x"
 
   environment {
-    REGION               = "${data.aws_region.current.name}"
     SECRETS_MANAGER_PATH = "/${var.secrets_manager_prefix}/{{.Team}}/{{.Account}}"
   }
 

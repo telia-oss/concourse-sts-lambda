@@ -13,31 +13,30 @@ import (
 	"github.com/aws/aws-sdk-go/service/sts/stsiface"
 )
 
-// SecretsManager for testing purposes.
-//go:generate mockgen -destination=mocks/mock_secretsmanager.go -package=mocks github.com/telia-oss/concourse-sts-lambda SecretsManager
-type SecretsManager secretsmanageriface.SecretsManagerAPI
+// SecretsClient for testing purposes.
+//go:generate mockgen -destination=mocks/mock_secrets_client.go -package=mocks github.com/telia-oss/concourse-sts-lambda SecretsClient
+type SecretsClient secretsmanageriface.SecretsManagerAPI
 
-// STSManager for testing purposes.
-//go:generate mockgen -destination=mocks/mock_stsmanager.go -package=mocks github.com/telia-oss/concourse-sts-lambda STSManager
-type STSManager stsiface.STSAPI
+// STSClient for testing purposes.
+//go:generate mockgen -destination=mocks/mock_sts_client.go -package=mocks github.com/telia-oss/concourse-sts-lambda STSClient
+type STSClient stsiface.STSAPI
 
 // Manager handles API calls to AWS.
 type Manager struct {
-	secretsClient SecretsManager
-	stsClient     STSManager
+	secretsClient SecretsClient
+	stsClient     STSClient
 }
 
-// NewManager creates a new manager from a session and region string.
-func NewManager(sess *session.Session, region string) *Manager {
-	config := &aws.Config{Region: aws.String(region)}
+// NewManager creates a new manager from an existing AWS session.
+func NewManager(sess *session.Session) *Manager {
 	return &Manager{
-		stsClient:     sts.New(sess, config),
-		secretsClient: secretsmanager.New(sess, config),
+		stsClient:     sts.New(sess),
+		secretsClient: secretsmanager.New(sess),
 	}
 }
 
 // NewTestManager ...
-func NewTestManager(s SecretsManager, t STSManager) *Manager {
+func NewTestManager(s SecretsClient, t STSClient) *Manager {
 	return &Manager{secretsClient: s, stsClient: t}
 }
 
