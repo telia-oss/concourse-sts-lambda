@@ -101,10 +101,10 @@ func TestHandler(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
-			sts := mocks.NewMockSTSManager(ctrl)
+			sts := mocks.NewMockSTSClient(ctrl)
 			sts.EXPECT().AssumeRole(gomock.Any()).Times(1).Return(tc.stsOutput, tc.stsError)
 
-			secrets := mocks.NewMockSecretsManager(ctrl)
+			secrets := mocks.NewMockSecretsClient(ctrl)
 			if tc.stsError == nil {
 				secrets.EXPECT().CreateSecret(gomock.Any()).MinTimes(1).Return(nil, tc.createSecretError)
 			}
