@@ -15,7 +15,7 @@ before_install:
 notifications:
   email: false
 script:
-- make test && make release
+- make release && make test
 deploy:
   provider: releases
   api_key:
