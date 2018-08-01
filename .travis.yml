@@ -10,7 +10,7 @@ matrix:
 notifications:
   email: false
 script:
-- make release
+- make test && make release
 deploy:
   provider: releases
   api_key:
