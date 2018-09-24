@@ -17,7 +17,7 @@ variable "s3_bucket" {
 
 variable "s3_key" {
   description = "The s3 key for the Lambda artifact."
-  default     = "v0.4.0.zip"
+  default     = "concourse-sts-lambda/v0.4.0.zip"
 }
 
 variable "role_prefix" {

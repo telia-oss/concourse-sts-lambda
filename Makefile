@@ -1,36 +1,30 @@
 BINARY      = main
-RELEASE     = concourse-sts-lambda.zip
+TRAVIS_TAG ?= $(shell git describe --tags --candidates=1 --dirty 2>/dev/null || echo "dev")
+RELEASE     = $(TRAVIS_TAG).zip
 TARGET     ?= linux
 ARCH       ?= amd64
-TRAVIS_TAG ?= $(shell git describe --tags --candidates=1 --dirty 2>/dev/null || echo "dev")
 
 SRC   = $(filter-out vendor/*, $(wildcard *.go))
 DIR   = $(shell pwd)
 
 default: test
 
-generate: $(SRC)
-	@echo "== Go Generate =="
-	go generate ./...
-
-run:
-	@echo "== Run =="
-	go run cmd/main.go
-
-build: $(BINARY)
-$(BINARY): $(SRC)
-	@echo "== Build =="
-	go build -o build/$(BINARY) -v cmd/main.go
-
 clean:
 	@echo "== Cleaning =="
 	rm -rf build
 
-release: $(RELEASE)
-$(RELEASE): $(SRC)
-	@echo "== Release build =="
+build: build/$(RELEASE)
+build/$(RELEASE): $(SRC)
+	@echo "== Build =="
 	CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=$(ARCH) go build -o build/$(BINARY) -v cmd/main.go
 	zip build/$(RELEASE) build/$(BINARY)
+	
+	# Create a copy of the zip with a static filename for uploading to github releases
+	cp build/$(RELEASE) build/concourse-sts-lambda.zip
+
+generate: $(SRC)
+	@echo "== Go Generate =="
+	go generate ./...
 
 test: test-code
 	@echo "== Terraform tests =="
@@ -70,4 +64,4 @@ test-code:
 	go vet -v ./...
 	go test -race -v ./...
 
-.PHONY: default build release test test-code generate
+.PHONY: default build test test-code generate
