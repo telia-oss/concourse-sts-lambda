@@ -1,38 +1,36 @@
-BINARY_NAME=main
-TARGET ?= linux
-ARCH ?= amd64
-SRC=$(shell find . -type f -name '*.go' -not -path "./vendor/*")
-DIR=$(shell pwd)
+BINARY      = main
+RELEASE     = concourse-sts-lambda.zip
+TARGET     ?= linux
+ARCH       ?= amd64
+TRAVIS_TAG ?= $(shell git describe --tags --candidates=1 --dirty 2>/dev/null || echo "dev")
+
+SRC   = $(filter-out vendor/*, $(wildcard *.go))
+DIR   = $(shell pwd)
 
 default: test
 
-generate:
+generate: $(SRC)
 	@echo "== Go Generate =="
 	go generate ./...
 
-run: test
+run:
 	@echo "== Run =="
 	go run cmd/main.go
 
-build: test
+build: $(BINARY)
+$(BINARY): $(SRC)
 	@echo "== Build =="
-	go build -o $(BINARY_NAME) -v cmd/main.go
+	go build -o build/$(BINARY) -v cmd/main.go
 
 clean:
 	@echo "== Cleaning =="
-	rm $(BINARY_NAME) || true
-	rm concourse-sts-lambda.zip || true
+	rm -rf build
 
-release:
+release: $(RELEASE)
+$(RELEASE): $(SRC)
 	@echo "== Release build =="
-	CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=$(ARCH) go build -o $(BINARY_NAME) -v cmd/main.go
-	zip concourse-sts-lambda.zip main
-
-test-code:
-	@echo "== Test =="
-	gofmt -s -l -w $(SRC)
-	go vet -v ./...
-	go test -race -v ./...
+	CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=$(ARCH) go build -o build/$(BINARY) -v cmd/main.go
+	zip build/$(RELEASE) build/$(BINARY)
 
 test: test-code
 	@echo "== Terraform tests =="
@@ -66,4 +64,10 @@ test: test-code
 	@echo "√ terraform validate example"
 	@cd $(DIR)
 
-.PHONY: default build test release test-code generate
+test-code:
+	@echo "== Test =="
+	gofmt -s -l -w $(SRC)
+	go vet -v ./...
+	go test -race -v ./...
+
+.PHONY: default build release test test-code generate
