@@ -6,7 +6,18 @@ variable "name_prefix" {
 }
 
 variable "filename" {
-  description = "Path to .zip file containing the handler. (I.e., output of make release)"
+  description = "Path to the handler zip-file."
+  default     = ""
+}
+
+variable "s3_bucket" {
+  description = "The bucket where the lambda function is uploaded."
+  default     = "telia-oss"
+}
+
+variable "s3_key" {
+  description = "The s3 key for the Lambda artifact."
+  default     = "v0.4.0.zip"
 }
 
 variable "role_prefix" {

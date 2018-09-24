@@ -6,7 +6,6 @@ module "sts-lambda" {
   source = "./modules/lambda"
 
   name_prefix            = "assume-role"
-  filename               = "../concourse-sts-lambda.zip"
   role_prefix            = "machine-user"
   secrets_manager_prefix = "concourse"
 
