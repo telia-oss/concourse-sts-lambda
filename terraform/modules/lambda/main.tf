@@ -7,10 +7,12 @@ data "aws_caller_identity" "current" {}
 
 module "lambda" {
   source  = "telia-oss/lambda/aws"
-  version = "0.2.0"
+  version = "0.3.0"
 
   name_prefix = "${var.name_prefix}"
   filename    = "${var.filename}"
+  s3_bucket   = "${var.s3_bucket}"
+  s3_key      = "${var.s3_key}"
   policy      = "${data.aws_iam_policy_document.lambda.json}"
   handler     = "main"
   runtime     = "go1.x"

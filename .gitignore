@@ -1,4 +1,3 @@
 **/.terraform
 **/*.tfstate*
-main
-concourse-sts-lambda.zip
+/build
