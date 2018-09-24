@@ -15,7 +15,8 @@ before_install:
 notifications:
   email: false
 script:
-- make release && make test
+- make test
+- make build
 deploy:
   - provider: s3
     access_key_id: AKIAIXXEON53QC2UQBPA
