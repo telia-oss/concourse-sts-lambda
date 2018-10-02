@@ -17,7 +17,7 @@ build: build/$(RELEASE)
 build/$(RELEASE): $(SRC)
 	@echo "== Build =="
 	CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=$(ARCH) go build -o build/$(BINARY) -v cmd/main.go
-	zip -m build/$(RELEASE) build/$(BINARY)
+	zip -mj build/$(RELEASE) build/$(BINARY)
 	
 	# Create a copy of the zip with a static filename for uploading to github releases
 	cp build/$(RELEASE) build/concourse-sts-lambda.zip
