@@ -7,7 +7,7 @@ data "aws_caller_identity" "current" {}
 
 locals {
   s3_bucket = "${var.filename == "" && var.s3_bucket == "" ? "telia-oss-${data.aws_region.current.name}" : var.s3_bucket}"
-  s3_key    = "${var.filename == "" && var.s3_key == "" ? "concourse-sts-lambda/v0.4.1.zip" : var.s3_key}"
+  s3_key    = "${var.filename == "" && var.s3_key == "" ? "concourse-sts-lambda/v0.5.0.zip" : var.s3_key}"
 }
 
 module "lambda" {
