@@ -12,12 +12,12 @@ variable "filename" {
 
 variable "s3_bucket" {
   description = "The bucket where the lambda function is uploaded."
-  default     = "telia-oss"
+  default     = ""
 }
 
 variable "s3_key" {
   description = "The s3 key for the Lambda artifact."
-  default     = "concourse-sts-lambda/v0.4.0.zip"
+  default     = ""
 }
 
 variable "role_prefix" {
