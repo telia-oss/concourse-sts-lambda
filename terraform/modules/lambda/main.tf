@@ -70,4 +70,16 @@ data "aws_iam_policy_document" "lambda" {
       "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:/${var.secrets_manager_prefix}/*",
     ]
   }
+
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "s3:GetObject",
+    ]
+
+    resources = [
+      "arn:aws:s3:::telia-oss-${data.aws_region.current.name}/concourse-sts-lambda/*",
+    ]
+  }
 }
