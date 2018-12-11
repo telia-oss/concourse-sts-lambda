@@ -7,9 +7,10 @@ import (
 	"testing"
 
 	"github.com/telia-oss/concourse-sts-lambda"
+	"gopkg.in/yaml.v2"
 )
 
-func TestConfig(t *testing.T) {
+func TestJSONConfig(t *testing.T) {
 	tests := []struct {
 		description string
 		input       string
@@ -20,12 +21,10 @@ func TestConfig(t *testing.T) {
 			input: strings.TrimSpace(`
 {
     "name": "team",
-    "accounts": [
-	{
+    "accounts": [{
 	    "name": "account",
 	    "roleArn": "role"
-	}
-    ]
+	}]
 }
 `),
 			expected: handler.Team{
@@ -49,8 +48,67 @@ func TestConfig(t *testing.T) {
 				t.Fatalf("unexpected error: %s", err)
 			}
 
-			if got, want := output, tc.expected; !reflect.DeepEqual(got, want) {
-				t.Errorf("\ngot:\n%v\nwant:\n%v\n", got, want)
+			if !reflect.DeepEqual(output, tc.expected) {
+				got, err := json.Marshal(output)
+				if err != nil {
+					t.Fatalf("failed to marshal output: %s", err)
+				}
+				want, err := json.Marshal(tc.expected)
+				if err != nil {
+					t.Fatalf("failed to marshal expected: %s", err)
+				}
+				t.Errorf("\ngot:\n%s\nwant:\n%s\n", got, want)
+			}
+		})
+	}
+}
+
+func TestYAMLConfig(t *testing.T) {
+	tests := []struct {
+		description string
+		input       string
+		expected    handler.Team
+	}{
+		{
+			description: "Unmarshal works as intended",
+			input: strings.TrimSpace(`
+---
+name: team
+accounts:
+  - name: account
+    role_arn: role
+`),
+			expected: handler.Team{
+				Name: "team",
+				Accounts: []*handler.Account{
+					{
+						Name:    "account",
+						RoleArn: "role",
+					},
+				},
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.description, func(t *testing.T) {
+			var output handler.Team
+			err := yaml.Unmarshal([]byte(tc.input), &output)
+
+			if err != nil {
+				t.Fatalf("unexpected error: %s", err)
+			}
+
+			if !reflect.DeepEqual(output, tc.expected) {
+				got, err := json.Marshal(output)
+				if err != nil {
+					t.Fatalf("failed to marshal output: %s", err)
+				}
+				want, err := json.Marshal(tc.expected)
+				if err != nil {
+					t.Fatalf("failed to marshal expected: %s", err)
+				}
+				t.Errorf("\ngot:\n%s\nwant:\n%s\n", got, want)
 			}
 		})
 	}
