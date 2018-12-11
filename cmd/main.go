@@ -3,29 +3,24 @@ package main
 import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws/session"
-	flags "github.com/jessevdk/go-flags"
+	"github.com/kelseyhightower/envconfig"
 	"github.com/sirupsen/logrus"
 	"github.com/telia-oss/concourse-sts-lambda"
 )
 
 // Command options
 type Command struct {
-	Path string `long:"secrets-manager-path" env:"SECRETS_MANAGER_PATH" default:"/concourse/{{.Team}}/{{.Account}}" description:"Path to use when writing to AWS Secrets manager."`
-}
-
-var logger *logrus.Logger
-
-func init() {
-	logger = logrus.New()
-	logger.Formatter = &logrus.JSONFormatter{}
+	Path string `envconfig:"SECRETS_MANAGER_PATH" default:"/concourse/{{.Team}}/{{.Account}}"`
 }
 
 func main() {
-	var command Command
+	logger := logrus.New()
+	logger.Formatter = &logrus.JSONFormatter{}
 
-	_, err := flags.Parse(&command)
+	var command Command
+	err := envconfig.Process("", command)
 	if err != nil {
-		logger.Fatalf("failed to parse flag: %s", err)
+		logger.Fatalf("failed to parse configuration: %s", err)
 	}
 	sess, err := session.NewSession()
 	if err != nil {
