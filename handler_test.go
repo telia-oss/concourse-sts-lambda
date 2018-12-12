@@ -2,11 +2,14 @@ package handler_test
 
 import (
 	"errors"
+	"io/ioutil"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
+	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
 	"github.com/aws/aws-sdk-go/service/sts"
 	"github.com/golang/mock/gomock"
@@ -16,15 +19,20 @@ import (
 )
 
 func TestHandler(t *testing.T) {
-	team := handler.Team{
-		Name: "test-team",
-		Accounts: []*handler.Account{
-			{
-				Name:    "test-account",
-				RoleArn: "test-account-arn",
-			},
-		},
+	config := handler.Configuration{
+		Bucket: "bucket",
+		Key:    "key",
 	}
+
+	team := strings.TrimSpace(`
+{
+	"name": "test-team",
+	"accounts": [{
+		"name": "test-account",
+		"roleArn": "test-account-arn"
+	}]
+}
+	`)
 
 	creds := &sts.AssumeRoleOutput{
 		Credentials: &sts.Credentials{
@@ -38,7 +46,8 @@ func TestHandler(t *testing.T) {
 	tests := []struct {
 		description       string
 		path              string
-		team              handler.Team
+		config            handler.Configuration
+		team              string
 		stsOutput         *sts.AssumeRoleOutput
 		stsError          error
 		putSecretError    error
@@ -48,6 +57,7 @@ func TestHandler(t *testing.T) {
 		{
 			description:       "assumes a role and writes the secrets",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
+			config:            config,
 			team:              team,
 			stsOutput:         creds,
 			stsError:          nil,
@@ -58,6 +68,7 @@ func TestHandler(t *testing.T) {
 		{
 			description:       "continues if it fails to assume role",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
+			config:            config,
 			team:              team,
 			stsOutput:         nil,
 			stsError:          errors.New("test-error"),
@@ -68,6 +79,7 @@ func TestHandler(t *testing.T) {
 		{
 			description:       "continues if it fails create secret",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
+			config:            config,
 			team:              team,
 			stsOutput:         creds,
 			stsError:          nil,
@@ -78,6 +90,7 @@ func TestHandler(t *testing.T) {
 		{
 			description:       "continues if it fails write secret",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
+			config:            config,
 			team:              team,
 			stsOutput:         creds,
 			stsError:          nil,
@@ -88,6 +101,7 @@ func TestHandler(t *testing.T) {
 		{
 			description:       "does not error if the secret already exists",
 			path:              "/concourse/{{.Team}}/{{.Account}}",
+			config:            config,
 			team:              team,
 			stsOutput:         creds,
 			stsError:          nil,
@@ -100,6 +114,13 @@ func TestHandler(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
+
+			s3Object := &s3.GetObjectOutput{
+				Body: ioutil.NopCloser(strings.NewReader(tc.team)),
+			}
+
+			s3 := mocks.NewMockS3Client(ctrl)
+			s3.EXPECT().GetObject(gomock.Any()).Times(1).Return(s3Object, nil)
 
 			sts := mocks.NewMockSTSClient(ctrl)
 			sts.EXPECT().AssumeRole(gomock.Any()).Times(1).Return(tc.stsOutput, tc.stsError)
@@ -121,9 +142,9 @@ func TestHandler(t *testing.T) {
 			}
 
 			logger, _ := logrus.NewNullLogger()
-			handle := handler.New(handler.NewTestManager(secrets, sts), tc.path, logger)
+			handle := handler.New(handler.NewTestManager(secrets, sts, s3), tc.path, logger)
 
-			if err := handle(tc.team); err != nil {
+			if err := handle(tc.config); err != nil {
 				t.Fatalf("unexpected error: %s", err)
 			}
 		})
