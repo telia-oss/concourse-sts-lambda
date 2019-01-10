@@ -5,7 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/sirupsen/logrus"
-	"github.com/telia-oss/concourse-sts-lambda"
+	handler "github.com/telia-oss/concourse-sts-lambda"
 )
 
 // Command options
@@ -20,7 +20,7 @@ func main() {
 	var command Command
 	err := envconfig.Process("", command)
 	if err != nil {
-		logger.Fatalf("failed to parse configuration: %s", err)
+		logger.Fatalf("failed to parse envconfig: %s", err)
 	}
 	sess, err := session.NewSession()
 	if err != nil {
