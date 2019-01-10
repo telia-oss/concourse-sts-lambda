@@ -43,6 +43,15 @@ data "aws_iam_policy_document" "lambda" {
   }
 
   statement {
+    effect  = "Allow"
+    actions = ["s3:GetObject"]
+
+    resources = [
+      "${var.config_bucket_arn}/*",
+    ]
+  }
+
+  statement {
     effect = "Allow"
 
     actions = [
