@@ -6,11 +6,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/telia-oss/concourse-sts-lambda"
-	"gopkg.in/yaml.v2"
+	handler "github.com/telia-oss/concourse-sts-lambda"
 )
 
-func TestJSONConfig(t *testing.T) {
+func TestConfig(t *testing.T) {
 	tests := []struct {
 		description string
 		input       string
@@ -43,57 +42,6 @@ func TestJSONConfig(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 			var output handler.Team
 			err := json.Unmarshal([]byte(tc.input), &output)
-
-			if err != nil {
-				t.Fatalf("unexpected error: %s", err)
-			}
-
-			if !reflect.DeepEqual(output, tc.expected) {
-				got, err := json.Marshal(output)
-				if err != nil {
-					t.Fatalf("failed to marshal output: %s", err)
-				}
-				want, err := json.Marshal(tc.expected)
-				if err != nil {
-					t.Fatalf("failed to marshal expected: %s", err)
-				}
-				t.Errorf("\ngot:\n%s\nwant:\n%s\n", got, want)
-			}
-		})
-	}
-}
-
-func TestYAMLConfig(t *testing.T) {
-	tests := []struct {
-		description string
-		input       string
-		expected    handler.Team
-	}{
-		{
-			description: "Unmarshal works as intended",
-			input: strings.TrimSpace(`
----
-name: team
-accounts:
-  - name: account
-    role_arn: role
-`),
-			expected: handler.Team{
-				Name: "team",
-				Accounts: []*handler.Account{
-					{
-						Name:    "account",
-						RoleArn: "role",
-					},
-				},
-			},
-		},
-	}
-
-	for _, tc := range tests {
-		t.Run(tc.description, func(t *testing.T) {
-			var output handler.Team
-			err := yaml.Unmarshal([]byte(tc.input), &output)
 
 			if err != nil {
 				t.Fatalf("unexpected error: %s", err)
