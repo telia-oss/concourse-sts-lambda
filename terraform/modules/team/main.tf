@@ -1,16 +1,39 @@
 # ------------------------------------------------------------------------------
 # Resources
 # ------------------------------------------------------------------------------
+locals {
+  team_config = <<EOF
+  {
+    "name": ${var.name_prefix},
+    "accounts": ${jsonencode(var.accounts)}
+  }
+  EOF
+
+  config_hash = "${substr(md5(local.team_config), 0, 7)}"
+}
+
+resource "aws_s3_bucket_object" "main" {
+  bucket  = "${var.config_bucket}"
+  key     = "${var.name_prefix}.json"
+  content = "${local.team_config}"
+}
+
 resource "aws_cloudwatch_event_rule" "main" {
-  name                = "${var.name_prefix}-sts-${substr(md5(var.team_config), 0, 7)}"
+  name                = "${var.name_prefix}-sts-${local.config_hash}"
   description         = "STS Lambda team configuration and trigger."
   schedule_expression = "rate(30 minutes)"
 }
 
 resource "aws_cloudwatch_event_target" "main" {
-  rule  = "${aws_cloudwatch_event_rule.main.name}"
-  arn   = "${var.lambda_arn}"
-  input = "${var.team_config}"
+  rule = "${aws_cloudwatch_event_rule.main.name}"
+  arn  = "${var.lambda_arn}"
+
+  input = <<EOF
+  {
+    "bucket": "${var.config_bucket}",
+    "key": "${aws_s3_bucket_object.main.key}"
+  }
+  EOF
 }
 
 resource "aws_lambda_permission" "main" {

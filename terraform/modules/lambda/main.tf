@@ -7,7 +7,7 @@ data "aws_caller_identity" "current" {}
 
 locals {
   s3_bucket = "${var.filename == "" && var.s3_bucket == "" ? "telia-oss-${data.aws_region.current.name}" : var.s3_bucket}"
-  s3_key    = "${var.filename == "" && var.s3_key == "" ? "concourse-sts-lambda/v0.8.0.zip" : var.s3_key}"
+  s3_key    = "${var.filename == "" && var.s3_key == "" ? "concourse-sts-lambda/v0.9.0.zip" : var.s3_key}"
 }
 
 module "lambda" {
@@ -39,6 +39,15 @@ data "aws_iam_policy_document" "lambda" {
 
     resources = [
       "arn:aws:iam::*:role/${var.role_prefix}*",
+    ]
+  }
+
+  statement {
+    effect  = "Allow"
+    actions = ["s3:GetObject"]
+
+    resources = [
+      "${var.config_bucket_arn}/*",
     ]
   }
 

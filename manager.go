@@ -1,12 +1,17 @@
 package handler
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
 	"github.com/aws/aws-sdk-go/service/secretsmanager/secretsmanageriface"
 	"github.com/aws/aws-sdk-go/service/sts"
@@ -21,10 +26,15 @@ type SecretsClient secretsmanageriface.SecretsManagerAPI
 //go:generate mockgen -destination=mocks/mock_sts_client.go -package=mocks github.com/telia-oss/concourse-sts-lambda STSClient
 type STSClient stsiface.STSAPI
 
+// S3Client for testing purposes.
+//go:generate mockgen -destination=mocks/mock_s3_client.go -package=mocks github.com/telia-oss/concourse-sts-lambda S3Client
+type S3Client s3iface.S3API
+
 // Manager handles API calls to AWS.
 type Manager struct {
 	secretsClient SecretsClient
 	stsClient     STSClient
+	s3Client      S3Client
 }
 
 // NewManager creates a new manager from an existing AWS session.
@@ -32,12 +42,37 @@ func NewManager(sess *session.Session) *Manager {
 	return &Manager{
 		stsClient:     sts.New(sess),
 		secretsClient: secretsmanager.New(sess),
+		s3Client:      s3.New(sess),
 	}
 }
 
 // NewTestManager ...
-func NewTestManager(s SecretsClient, t STSClient) *Manager {
-	return &Manager{secretsClient: s, stsClient: t}
+func NewTestManager(sm SecretsClient, sts STSClient, s3 S3Client) *Manager {
+	return &Manager{secretsClient: sm, stsClient: sts, s3Client: s3}
+}
+
+// ReadConfig from S3.
+func (m *Manager) ReadConfig(bucket, key string) (*Team, error) {
+	input := &s3.GetObjectInput{
+		Bucket: aws.String(bucket),
+		Key:    aws.String(key),
+	}
+	obj, err := m.s3Client.GetObject(input)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get object from s3: %s", err)
+	}
+	defer obj.Body.Close()
+
+	b := bytes.NewBuffer(nil)
+	if _, err := io.Copy(b, obj.Body); err != nil {
+		return nil, fmt.Errorf("failed to copy object body: %s", err)
+	}
+
+	var out *Team
+	if err := json.Unmarshal(b.Bytes(), &out); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal object: %s", err)
+	}
+	return out, nil
 }
 
 // AssumeRole on the given role ARN and the given team name (identifier).

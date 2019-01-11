@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/telia-oss/concourse-sts-lambda"
+	handler "github.com/telia-oss/concourse-sts-lambda"
 )
 
 func TestConfig(t *testing.T) {
@@ -20,12 +20,10 @@ func TestConfig(t *testing.T) {
 			input: strings.TrimSpace(`
 {
     "name": "team",
-    "accounts": [
-	{
+    "accounts": [{
 	    "name": "account",
 	    "roleArn": "role"
-	}
-    ]
+	}]
 }
 `),
 			expected: handler.Team{
@@ -49,8 +47,16 @@ func TestConfig(t *testing.T) {
 				t.Fatalf("unexpected error: %s", err)
 			}
 
-			if got, want := output, tc.expected; !reflect.DeepEqual(got, want) {
-				t.Errorf("\ngot:\n%v\nwant:\n%v\n", got, want)
+			if !reflect.DeepEqual(output, tc.expected) {
+				got, err := json.Marshal(output)
+				if err != nil {
+					t.Fatalf("failed to marshal output: %s", err)
+				}
+				want, err := json.Marshal(tc.expected)
+				if err != nil {
+					t.Fatalf("failed to marshal expected: %s", err)
+				}
+				t.Errorf("\ngot:\n%s\nwant:\n%s\n", got, want)
 			}
 		})
 	}

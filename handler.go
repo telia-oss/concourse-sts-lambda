@@ -1,12 +1,18 @@
 package handler
 
 import (
+	"fmt"
+
 	"github.com/sirupsen/logrus"
 )
 
 // New lambda handler with the provided settings.
-func New(manager *Manager, secretTemplate string, logger *logrus.Logger) func(Team) error {
-	return func(team Team) error {
+func New(manager *Manager, secretTemplate string, logger *logrus.Logger) func(Configuration) error {
+	return func(config Configuration) error {
+		team, err := manager.ReadConfig(config.Bucket, config.Key)
+		if err != nil {
+			return fmt.Errorf("failed to read configuration: %s", err)
+		}
 		// Loop through teams and assume roles/write credentials for
 		// all accounts controlled by the team.
 		for _, account := range team.Accounts {

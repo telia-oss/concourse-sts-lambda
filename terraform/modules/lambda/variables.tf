@@ -20,6 +20,10 @@ variable "s3_key" {
   default     = ""
 }
 
+variable "config_bucket_arn" {
+  description = "The ARN of the config bucket."
+}
+
 variable "role_prefix" {
   description = "Prefix of CI roles which the Lambda function will be allowed to assume. (should be the same in all accounts)."
 }

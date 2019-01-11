@@ -2,12 +2,10 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-module "sts-lambda" {
-  source = "./modules/lambda"
-
-  name_prefix            = "assume-role"
-  role_prefix            = "machine-user"
-  secrets_manager_prefix = "concourse"
+resource "aws_s3_bucket" "config" {
+  bucket        = "sts-lambda-config-bucket-example"
+  acl           = "private"
+  force_destroy = "true"
 
   tags {
     environment = "dev"
@@ -34,7 +32,7 @@ data "aws_iam_policy_document" "assume" {
       type = "AWS"
 
       identifiers = [
-        "${module.sts-lambda.role_arn}",
+        "${module.lambda.role_arn}",
       ]
     }
   }
@@ -45,25 +43,37 @@ resource "aws_iam_role_policy_attachment" "view_only_policy" {
   policy_arn = "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess"
 }
 
+module "lambda" {
+  source = "./modules/lambda"
+
+  name_prefix            = "assume-role"
+  role_prefix            = "machine-user"
+  secrets_manager_prefix = "concourse"
+  config_bucket_arn      = "${aws_s3_bucket.config.arn}"
+
+  tags {
+    environment = "dev"
+    terraform   = "True"
+  }
+}
+
 # Each team will need their own Lambda trigger which is CRON triggered
 # and passes that teams configuration to the function when it's invoked.
-module "sts-lambda-trigger" {
-  source = "./modules/trigger"
+module "team" {
+  source = "./modules/team"
 
-  name_prefix = "example-team"
-  lambda_arn  = "${module.sts-lambda.arn}"
+  name_prefix   = "example-team"
+  lambda_arn    = "${module.lambda.arn}"
+  config_bucket = "${aws_s3_bucket.config.id}"
 
-  team_config = <<EOF
-{
-  "name": "example-team",
-  "accounts": [{
-    "name": "example-account",
-    "roleArn": "${aws_iam_role.main.arn}"
-  }]
-}
-EOF
+  accounts = [
+    {
+      name    = "example-account"
+      roleArn = "${aws_iam_role.main.arn}"
+    },
+  ]
 }
 
 output "lambda_arn" {
-  value = "${module.sts-lambda.arn}"
+  value = "${module.lambda.arn}"
 }

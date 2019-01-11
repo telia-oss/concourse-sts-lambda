@@ -5,7 +5,13 @@ import (
 	"text/template"
 )
 
-// Team represents the configuration for a single CI/CD team.
+// Configuration passed to the Lambda, pointing to an S3 object with the team configuration.
+type Configuration struct {
+	Bucket string `json:"bucket"`
+	Key    string `json:"key"`
+}
+
+// Team represents the configuration for a single team.
 type Team struct {
 	Name     string     `json:"name"`
 	Accounts []*Account `json:"accounts"`
