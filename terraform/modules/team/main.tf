@@ -4,7 +4,7 @@
 locals {
   team_config = <<EOF
   {
-    "name": ${var.name_prefix},
+    "name": ${var.name},
     "accounts": ${jsonencode(var.accounts)}
   }
   EOF
@@ -14,12 +14,12 @@ locals {
 
 resource "aws_s3_bucket_object" "main" {
   bucket  = "${var.config_bucket}"
-  key     = "${var.name_prefix}.json"
+  key     = "${var.name}.json"
   content = "${local.team_config}"
 }
 
 resource "aws_cloudwatch_event_rule" "main" {
-  name                = "${var.name_prefix}-sts-${local.config_hash}"
+  name                = "concourse-${var.name}-sts-${local.config_hash}"
   description         = "STS Lambda team configuration and trigger."
   schedule_expression = "rate(30 minutes)"
 }
@@ -37,7 +37,7 @@ resource "aws_cloudwatch_event_target" "main" {
 }
 
 resource "aws_lambda_permission" "main" {
-  statement_id  = "${var.name_prefix}-sts-lambda-permission"
+  statement_id  = "concourse-${var.name}-sts-lambda-permission"
   action        = "lambda:InvokeFunction"
   function_name = "${var.lambda_arn}"
   principal     = "events.amazonaws.com"

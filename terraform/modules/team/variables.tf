@@ -1,8 +1,8 @@
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-variable "name_prefix" {
-  description = "Prefix used for resource names."
+variable "name" {
+  description = "Name of the team (used to give descriptive name to resources)."
 }
 
 variable "lambda_arn" {

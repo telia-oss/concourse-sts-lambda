@@ -62,7 +62,7 @@ module "lambda" {
 module "team" {
   source = "./modules/team"
 
-  name_prefix   = "example-team"
+  name          = "example-team"
   lambda_arn    = "${module.lambda.arn}"
   config_bucket = "${aws_s3_bucket.config.id}"
 
