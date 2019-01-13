@@ -18,7 +18,7 @@ func main() {
 	logger.Formatter = &logrus.JSONFormatter{}
 
 	var command Command
-	err := envconfig.Process("", command)
+	err := envconfig.Process("", &command)
 	if err != nil {
 		logger.Fatalf("failed to parse envconfig: %s", err)
 	}
