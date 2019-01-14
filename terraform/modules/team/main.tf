@@ -4,7 +4,7 @@
 locals {
   team_config = <<EOF
   {
-    "name": ${var.name},
+    "name": "${var.name}",
     "accounts": ${jsonencode(var.accounts)}
   }
   EOF
