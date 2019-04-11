@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"encoding/json"
+	"fmt"
 	"strings"
 	"text/template"
 )
@@ -19,8 +21,22 @@ type Team struct {
 
 // Account represents the configuration for an assumable role.
 type Account struct {
-	Name    string `json:"name"`
-	RoleArn string `json:"roleArn"`
+	Name     string `json:"name"`
+	RoleArn  string `json:"roleArn"`
+	Duration int    `json:"duration"`
+}
+
+func (a *Account) UnmarshalJSON(b []byte) error {
+	type accountType Account
+	if err := json.Unmarshal(b, (*accountType)(a)); err != nil {
+		return err
+	}
+	if a.Duration == 0 {
+		a.Duration = 3600
+	} else if a.Duration < 3600 || a.Duration > 43200 {
+		return fmt.Errorf("duration should be between 3600 and 43200 seconds but is: %d", a.Duration)
+	}
+	return nil
 }
 
 // SecretPath represents the path used to write secrets into Secrets manager.

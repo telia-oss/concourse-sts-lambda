@@ -76,7 +76,7 @@ func (m *Manager) ReadConfig(bucket, key string) (*Team, error) {
 }
 
 // AssumeRole on the given role ARN and the given team name (identifier).
-func (m *Manager) AssumeRole(arn, team string) (*sts.Credentials, error) {
+func (m *Manager) AssumeRole(arn, team string, duration int) (*sts.Credentials, error) {
 	input := &sts.AssumeRoleInput{
 		DurationSeconds: aws.Int64(3600),
 		RoleArn:         aws.String(arn),
