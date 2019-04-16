@@ -20,7 +20,7 @@ func New(manager *Manager, secretTemplate string, logger *logrus.Logger) func(Co
 				"team":     team.Name,
 				"account":  account.Name,
 				"role":     account.RoleArn,
-				"duration": account.RoleArn,
+				"duration": account.Duration,
 			})
 			path, err := NewSecretPath(team.Name, account.Name, secretTemplate).String()
 			if err != nil {
