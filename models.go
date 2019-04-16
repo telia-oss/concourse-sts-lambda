@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"encoding/json"
 	"strings"
 	"text/template"
 )
@@ -23,17 +22,6 @@ type Account struct {
 	Name     string `json:"name"`
 	RoleArn  string `json:"roleArn"`
 	Duration int64  `json:"duration"`
-}
-
-func (a *Account) UnmarshalJSON(b []byte) error {
-	type accountType Account
-	if err := json.Unmarshal(b, (*accountType)(a)); err != nil {
-		return err
-	}
-	if a.Duration == 0 {
-		a.Duration = 3600
-	}
-	return nil
 }
 
 // SecretPath represents the path used to write secrets into Secrets manager.

@@ -23,6 +23,11 @@ func TestConfig(t *testing.T) {
     "accounts": [{
 	    "name": "account",
 	    "roleArn": "role"
+	},
+	{
+	    "name": "account2",
+	    "roleArn": "role2",
+		"duration": 4000
 	}]
 }
 `),
@@ -32,7 +37,12 @@ func TestConfig(t *testing.T) {
 					{
 						Name:     "account",
 						RoleArn:  "role",
-						Duration: 3600,
+						Duration: 0,
+					},
+					{
+						Name:     "account2",
+						RoleArn:  "role2",
+						Duration: 4000,
 					},
 				},
 			},
@@ -60,37 +70,6 @@ func TestConfig(t *testing.T) {
 				t.Errorf("\ngot:\n%s\nwant:\n%s\n", got, want)
 			}
 		})
-	}
-}
-
-func TestAccount_UnmarshalJSON(t *testing.T) {
-	accountWithNormalDuration := `
-{
-	"name": "account",
-	"roleArn": "role",
-	"duration": 3600
-}`
-	var output handler.Account
-	err := json.Unmarshal([]byte(accountWithNormalDuration), &output)
-	if err != nil {
-		t.Fatalf("expected not to fail because duration is 3600: %s", err)
-	}
-
-}
-
-func TestAccount_UnmarshalJSON_WithoutDuration(t *testing.T) {
-	var output handler.Account
-	accountWithoutDuration := `
-{
-	"name": "account",
-	"roleArn": "role"
-}`
-	err := json.Unmarshal([]byte(accountWithoutDuration), &output)
-	if err != nil {
-		t.Fatalf("expected not to fail because duration is not filled in: %s", err)
-	}
-	if output.Duration != 3600 {
-		t.Fatalf("Default duration should be 3600 but is: %d", output.Duration)
 	}
 }
 
