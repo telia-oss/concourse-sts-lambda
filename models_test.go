@@ -23,6 +23,11 @@ func TestConfig(t *testing.T) {
     "accounts": [{
 	    "name": "account",
 	    "roleArn": "role"
+	},
+	{
+	    "name": "account2",
+	    "roleArn": "role2",
+		"duration": 4000
 	}]
 }
 `),
@@ -30,8 +35,14 @@ func TestConfig(t *testing.T) {
 				Name: "team",
 				Accounts: []*handler.Account{
 					{
-						Name:    "account",
-						RoleArn: "role",
+						Name:     "account",
+						RoleArn:  "role",
+						Duration: 0,
+					},
+					{
+						Name:     "account2",
+						RoleArn:  "role2",
+						Duration: 4000,
 					},
 				},
 			},

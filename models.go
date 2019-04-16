@@ -19,8 +19,9 @@ type Team struct {
 
 // Account represents the configuration for an assumable role.
 type Account struct {
-	Name    string `json:"name"`
-	RoleArn string `json:"roleArn"`
+	Name     string `json:"name"`
+	RoleArn  string `json:"roleArn"`
+	Duration int64  `json:"duration"`
 }
 
 // SecretPath represents the path used to write secrets into Secrets manager.

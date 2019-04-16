@@ -62,6 +62,21 @@ Example configuration for a Team (which is then passed as input in the CloudWatc
 }
 ```
 
+You can also optionally specify the duration the sts assume role call should use:
+
+```json
+{
+  "name": "example-team",
+  "accounts": [{
+    "name": "divx-lab",
+    "roleArn": "arn:aws:iam::123456789999:role/machine-user-example",
+    "duration": 7200
+  }]
+}
+```
+
+This is useful if you have long running jobs on concourse. The duration should be specified in seconds, and between 1 hour and 12 hours.
+
 When the function is triggered with this input it will assume the
 `roleArn`, and write the credentials to (by default):
 
