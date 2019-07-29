@@ -1,0 +1,81 @@
+version: '2'
+
+env:
+  GO111MODULE: on
+  TRAVIS_TAG:
+    sh: git describe --tags --candidates=1 --dirty 2>/dev/null || echo "dev"
+
+tasks:
+  default:
+    cmds:
+    - task: test
+
+  test:
+    desc: Run all tests.
+    cmds:
+    - task: test-go
+    - task: test-terraform
+
+  build:
+    cmds:
+    - go build -o build/${TRAVIS_TAG}{{exeExt}} -ldflags="-s -w" -v cmd/main.go
+    - zip -mj build/${TRAVIS_TAG}.zip build/${TRAVIS_TAG}
+    env: { CGO_ENABLED: '0', GOOS: '{{OS}}', GOARCH: '{{ARCH}}' }
+    sources:
+    - '*.go'
+    generates:
+    - build/*.zip
+    method: checksum
+  
+  generate:
+    desc: Generate test fakes.
+    cmds:
+    - go generate ./...
+    sources:
+    - '*.go'
+    generates:
+    - mocks/*.go
+    method: checksum
+
+  test-go:
+    desc: Run golang test suite.
+    deps: [generate]
+    cmds:
+    - gofmt -s -l -w .
+    - go vet -v ./...
+    - go test -race -v ./...
+
+  test-terraform:
+    desc: Run tests for all terraform directories.
+    silent: true
+    env:
+      AWS_DEFAULT_REGION: eu-west-1
+      DIRECTORIES:
+        sh: find . -type f -name '*.tf' -not -path "**/.terraform/*" -exec dirname {} \; | sort -u
+    cmds:
+    - |
+      BOLD=$(tput bold)
+      NORM=$(tput sgr0)
+
+      for d in $DIRECTORIES; do 
+        echo "${BOLD} $d:${NORM}"
+        cd $d
+
+        if ! terraform fmt -check=true -write=true -list=false -recursive=false; then
+          echo "  ✗ terraform fmt" && exit $?
+        else
+          echo "  √ terraform fmt"
+        fi
+
+        if ! terraform init -backend=false -input=false -get=true -get-plugins=true -no-color > /dev/null; then
+          echo "  ✗ terraform init" && exit $?
+        else
+          echo "  √ terraform init"
+        fi
+
+        if ! terraform validate > /dev/null; then
+          echo "  ✗ terraform validate" && exit $?
+        else
+          echo "  √ terraform validate"
+        fi
+      done
