@@ -20,3 +20,10 @@ variable "accounts" {
   description = "Valid JSON representation of a Team (see Go code)."
   type        = list(map(string))
 }
+
+variable "tags" {
+  description = "A map of tags (key-value pairs) passed to resources."
+  type        = map(string)
+  default     = {}
+}
+

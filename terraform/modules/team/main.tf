@@ -11,6 +11,7 @@ resource "aws_cloudwatch_event_rule" "main" {
   name                = "concourse-${var.name}-sts-${local.config_hash}"
   description         = "STS Lambda team configuration and trigger."
   schedule_expression = "rate(30 minutes)"
+  tags                = var.tags
 }
 
 resource "aws_lambda_permission" "main" {
