@@ -9,19 +9,19 @@ variable "name_prefix" {
 variable "filename" {
   description = "Path to the handler zip-file."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "s3_bucket" {
   description = "The bucket where the lambda function is uploaded."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "s3_key" {
   description = "The s3 key for the Lambda artifact."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "config_bucket_arn" {
