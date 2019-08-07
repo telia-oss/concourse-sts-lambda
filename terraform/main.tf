@@ -32,6 +32,7 @@ module "team" {
   name          = "${var.name_prefix}-team"
   lambda_arn    = module.lambda.arn
   config_bucket = aws_s3_bucket.config.id
+  tags          = var.tags
 
   accounts = [
     {

@@ -18,7 +18,7 @@ variable "config_bucket" {
 
 variable "accounts" {
   description = "Valid JSON representation of a Team (see Go code)."
-  type        = list(map(string))
+  type        = list(object({ name = string, roleArn = string }))
 }
 
 variable "tags" {
@@ -26,4 +26,3 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
-

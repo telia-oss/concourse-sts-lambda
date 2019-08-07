@@ -21,6 +21,7 @@ tasks:
     cmds:
     - go build -o build/${TRAVIS_TAG}{{exeExt}} -ldflags="-s -w" -v cmd/main.go
     - zip -mj build/${TRAVIS_TAG}.zip build/${TRAVIS_TAG}
+    - cp build/${TRAVIS_TAG}.zip build/concourse-sts-lambda.zip
     env: { CGO_ENABLED: '0', GOOS: '{{OS}}', GOARCH: '{{ARCH}}' }
   
   generate:
