@@ -12,6 +12,12 @@ variable "filename" {
   default     = null
 }
 
+variable "source_code_hash" {
+  description = "Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either filename or s3_key."
+  type        = string
+  default     = null
+}
+
 variable "s3_bucket" {
   description = "The bucket where the lambda function is uploaded."
   type        = string

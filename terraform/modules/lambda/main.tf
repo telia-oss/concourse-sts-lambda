@@ -14,13 +14,14 @@ module "lambda" {
   source  = "telia-oss/lambda/aws"
   version = "3.0.0"
 
-  name_prefix = var.name_prefix
-  filename    = var.filename
-  s3_bucket   = local.s3_bucket
-  s3_key      = local.s3_key
-  policy      = data.aws_iam_policy_document.lambda.json
-  handler     = "main"
-  runtime     = "go1.x"
+  name_prefix      = var.name_prefix
+  filename         = var.filename
+  source_code_hash = var.source_code_hash
+  s3_bucket        = local.s3_bucket
+  s3_key           = local.s3_key
+  policy           = data.aws_iam_policy_document.lambda.json
+  handler          = "main"
+  runtime          = "go1.x"
 
   environment = {
     SECRETS_MANAGER_PATH = "/${var.secrets_manager_prefix}/{{.Team}}/{{.Account}}"
