@@ -12,7 +12,7 @@ notifications:
 install:
   - curl -sL https://taskfile.dev/install.sh | sh
   - curl -sL https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip -o terraform.zip
-  - sudo unzip terraform.zip -d /usr/bin/terraform && rm -f terraform.zip
+  - sudo unzip terraform.zip -d /usr/bin && rm -f terraform.zip
   - go install github.com/golang/mock/mockgen
 
 script:
