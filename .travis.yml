@@ -16,7 +16,7 @@ install:
   - GO111MODULE=off go install github.com/golang/mock/mockgen
 
 script:
-  - ./task test build
+  - ./bin/task test build
 
 deploy:
   - provider: releases
