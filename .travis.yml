@@ -19,7 +19,8 @@ before_script:
   - go install github.com/golang/mock/mockgen
 
 script:
-  - go get -u -v github.com/go-task/task/v2/cmd/task && task test && task build
+  - curl -sL https://taskfile.dev/install.sh | sh
+  - task test build
 
 deploy:
   - provider: s3
