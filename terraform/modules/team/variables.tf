@@ -18,7 +18,7 @@ variable "config_bucket" {
 
 variable "accounts" {
   description = "Valid JSON representation of a Team (see Go code)."
-  type        = list(object({ name = string, roleArn = string }))
+  type        = list(object({ name = string, roleArn = string, duration = string }))
 }
 
 variable "tags" {
