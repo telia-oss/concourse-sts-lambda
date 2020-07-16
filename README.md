@@ -77,6 +77,22 @@ You can also optionally specify the duration the sts assume role call should use
 
 This is useful if you have long running jobs on concourse. The duration should be specified in seconds, and between 1 hour and 12 hours.
 
+If you need your created secrets to have certain tags applied you can add these as well:
+
+```json
+{
+  "name": "example-team",
+  "accounts": [{
+    "name": "divx-lab",
+    "roleArn": "arn:aws:iam::123456789999:role/machine-user-example"
+  }],
+  "secretTags": {
+    "Team": "example",
+    "Environment": "Production"
+  }
+}
+```
+
 When the function is triggered with this input it will assume the
 `roleArn`, and write the credentials to (by default):
 

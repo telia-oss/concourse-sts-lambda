@@ -32,7 +32,7 @@ func New(manager *Manager, secretTemplate string, logger *logrus.Logger) func(Co
 				log.Warnf("failed to assume role: %s", err)
 				continue
 			}
-			if err := manager.WriteCredentials(creds, path); err != nil {
+			if err := manager.WriteCredentials(creds, path, team.SecretTags); err != nil {
 				log.Warnf("failed to write credentials: %s", err)
 				continue
 			}

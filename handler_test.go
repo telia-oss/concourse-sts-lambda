@@ -30,7 +30,10 @@ func TestHandler(t *testing.T) {
 	"accounts": [{
 		"name": "test-account",
 		"roleArn": "test-account-arn"
-	}]
+	}],
+	"secretTags": {
+		"Team": "test-team"
+	}
 }
 	`)
 
