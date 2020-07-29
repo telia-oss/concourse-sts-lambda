@@ -75,7 +75,7 @@ You can also optionally specify the duration the sts assume role call should use
 }
 ```
 
-This is useful if you have long running jobs on concourse. The duration should be specified in seconds, and between 1 hour and 12 hours.
+Note: [Role chaining](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html) has a limit on duration to be maximum 1 hour.
 
 When the function is triggered with this input it will assume the
 `roleArn`, and write the credentials to (by default):
