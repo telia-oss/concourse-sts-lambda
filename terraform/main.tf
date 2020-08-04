@@ -36,8 +36,9 @@ module "team" {
 
   accounts = [
     {
-      name    = "example-account"
-      roleArn = aws_iam_role.main.arn
+      name     = "example-account"
+      roleArn  = aws_iam_role.main.arn
+      duration = 3600
     },
   ]
 }
