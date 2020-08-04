@@ -5,7 +5,7 @@
 package mocks
 
 import (
-	aws "github.com/aws/aws-sdk-go/aws"
+	context "context"
 	request "github.com/aws/aws-sdk-go/aws/request"
 	secretsmanager "github.com/aws/aws-sdk-go/service/secretsmanager"
 	gomock "github.com/golang/mock/gomock"
@@ -37,6 +37,7 @@ func (m *MockSecretsClient) EXPECT() *MockSecretsClientMockRecorder {
 
 // CancelRotateSecret mocks base method
 func (m *MockSecretsClient) CancelRotateSecret(arg0 *secretsmanager.CancelRotateSecretInput) (*secretsmanager.CancelRotateSecretOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CancelRotateSecret", arg0)
 	ret0, _ := ret[0].(*secretsmanager.CancelRotateSecretOutput)
 	ret1, _ := ret[1].(error)
@@ -45,11 +46,13 @@ func (m *MockSecretsClient) CancelRotateSecret(arg0 *secretsmanager.CancelRotate
 
 // CancelRotateSecret indicates an expected call of CancelRotateSecret
 func (mr *MockSecretsClientMockRecorder) CancelRotateSecret(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelRotateSecret", reflect.TypeOf((*MockSecretsClient)(nil).CancelRotateSecret), arg0)
 }
 
 // CancelRotateSecretRequest mocks base method
 func (m *MockSecretsClient) CancelRotateSecretRequest(arg0 *secretsmanager.CancelRotateSecretInput) (*request.Request, *secretsmanager.CancelRotateSecretOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CancelRotateSecretRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.CancelRotateSecretOutput)
@@ -58,11 +61,13 @@ func (m *MockSecretsClient) CancelRotateSecretRequest(arg0 *secretsmanager.Cance
 
 // CancelRotateSecretRequest indicates an expected call of CancelRotateSecretRequest
 func (mr *MockSecretsClientMockRecorder) CancelRotateSecretRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelRotateSecretRequest", reflect.TypeOf((*MockSecretsClient)(nil).CancelRotateSecretRequest), arg0)
 }
 
 // CancelRotateSecretWithContext mocks base method
-func (m *MockSecretsClient) CancelRotateSecretWithContext(arg0 aws.Context, arg1 *secretsmanager.CancelRotateSecretInput, arg2 ...request.Option) (*secretsmanager.CancelRotateSecretOutput, error) {
+func (m *MockSecretsClient) CancelRotateSecretWithContext(arg0 context.Context, arg1 *secretsmanager.CancelRotateSecretInput, arg2 ...request.Option) (*secretsmanager.CancelRotateSecretOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -75,12 +80,14 @@ func (m *MockSecretsClient) CancelRotateSecretWithContext(arg0 aws.Context, arg1
 
 // CancelRotateSecretWithContext indicates an expected call of CancelRotateSecretWithContext
 func (mr *MockSecretsClientMockRecorder) CancelRotateSecretWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelRotateSecretWithContext", reflect.TypeOf((*MockSecretsClient)(nil).CancelRotateSecretWithContext), varargs...)
 }
 
 // CreateSecret mocks base method
 func (m *MockSecretsClient) CreateSecret(arg0 *secretsmanager.CreateSecretInput) (*secretsmanager.CreateSecretOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSecret", arg0)
 	ret0, _ := ret[0].(*secretsmanager.CreateSecretOutput)
 	ret1, _ := ret[1].(error)
@@ -89,11 +96,13 @@ func (m *MockSecretsClient) CreateSecret(arg0 *secretsmanager.CreateSecretInput)
 
 // CreateSecret indicates an expected call of CreateSecret
 func (mr *MockSecretsClientMockRecorder) CreateSecret(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSecret", reflect.TypeOf((*MockSecretsClient)(nil).CreateSecret), arg0)
 }
 
 // CreateSecretRequest mocks base method
 func (m *MockSecretsClient) CreateSecretRequest(arg0 *secretsmanager.CreateSecretInput) (*request.Request, *secretsmanager.CreateSecretOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSecretRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.CreateSecretOutput)
@@ -102,11 +111,13 @@ func (m *MockSecretsClient) CreateSecretRequest(arg0 *secretsmanager.CreateSecre
 
 // CreateSecretRequest indicates an expected call of CreateSecretRequest
 func (mr *MockSecretsClientMockRecorder) CreateSecretRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSecretRequest", reflect.TypeOf((*MockSecretsClient)(nil).CreateSecretRequest), arg0)
 }
 
 // CreateSecretWithContext mocks base method
-func (m *MockSecretsClient) CreateSecretWithContext(arg0 aws.Context, arg1 *secretsmanager.CreateSecretInput, arg2 ...request.Option) (*secretsmanager.CreateSecretOutput, error) {
+func (m *MockSecretsClient) CreateSecretWithContext(arg0 context.Context, arg1 *secretsmanager.CreateSecretInput, arg2 ...request.Option) (*secretsmanager.CreateSecretOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -119,12 +130,14 @@ func (m *MockSecretsClient) CreateSecretWithContext(arg0 aws.Context, arg1 *secr
 
 // CreateSecretWithContext indicates an expected call of CreateSecretWithContext
 func (mr *MockSecretsClientMockRecorder) CreateSecretWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSecretWithContext", reflect.TypeOf((*MockSecretsClient)(nil).CreateSecretWithContext), varargs...)
 }
 
 // DeleteResourcePolicy mocks base method
 func (m *MockSecretsClient) DeleteResourcePolicy(arg0 *secretsmanager.DeleteResourcePolicyInput) (*secretsmanager.DeleteResourcePolicyOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteResourcePolicy", arg0)
 	ret0, _ := ret[0].(*secretsmanager.DeleteResourcePolicyOutput)
 	ret1, _ := ret[1].(error)
@@ -133,11 +146,13 @@ func (m *MockSecretsClient) DeleteResourcePolicy(arg0 *secretsmanager.DeleteReso
 
 // DeleteResourcePolicy indicates an expected call of DeleteResourcePolicy
 func (mr *MockSecretsClientMockRecorder) DeleteResourcePolicy(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteResourcePolicy", reflect.TypeOf((*MockSecretsClient)(nil).DeleteResourcePolicy), arg0)
 }
 
 // DeleteResourcePolicyRequest mocks base method
 func (m *MockSecretsClient) DeleteResourcePolicyRequest(arg0 *secretsmanager.DeleteResourcePolicyInput) (*request.Request, *secretsmanager.DeleteResourcePolicyOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteResourcePolicyRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.DeleteResourcePolicyOutput)
@@ -146,11 +161,13 @@ func (m *MockSecretsClient) DeleteResourcePolicyRequest(arg0 *secretsmanager.Del
 
 // DeleteResourcePolicyRequest indicates an expected call of DeleteResourcePolicyRequest
 func (mr *MockSecretsClientMockRecorder) DeleteResourcePolicyRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteResourcePolicyRequest", reflect.TypeOf((*MockSecretsClient)(nil).DeleteResourcePolicyRequest), arg0)
 }
 
 // DeleteResourcePolicyWithContext mocks base method
-func (m *MockSecretsClient) DeleteResourcePolicyWithContext(arg0 aws.Context, arg1 *secretsmanager.DeleteResourcePolicyInput, arg2 ...request.Option) (*secretsmanager.DeleteResourcePolicyOutput, error) {
+func (m *MockSecretsClient) DeleteResourcePolicyWithContext(arg0 context.Context, arg1 *secretsmanager.DeleteResourcePolicyInput, arg2 ...request.Option) (*secretsmanager.DeleteResourcePolicyOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -163,12 +180,14 @@ func (m *MockSecretsClient) DeleteResourcePolicyWithContext(arg0 aws.Context, ar
 
 // DeleteResourcePolicyWithContext indicates an expected call of DeleteResourcePolicyWithContext
 func (mr *MockSecretsClientMockRecorder) DeleteResourcePolicyWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteResourcePolicyWithContext", reflect.TypeOf((*MockSecretsClient)(nil).DeleteResourcePolicyWithContext), varargs...)
 }
 
 // DeleteSecret mocks base method
 func (m *MockSecretsClient) DeleteSecret(arg0 *secretsmanager.DeleteSecretInput) (*secretsmanager.DeleteSecretOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteSecret", arg0)
 	ret0, _ := ret[0].(*secretsmanager.DeleteSecretOutput)
 	ret1, _ := ret[1].(error)
@@ -177,11 +196,13 @@ func (m *MockSecretsClient) DeleteSecret(arg0 *secretsmanager.DeleteSecretInput)
 
 // DeleteSecret indicates an expected call of DeleteSecret
 func (mr *MockSecretsClientMockRecorder) DeleteSecret(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSecret", reflect.TypeOf((*MockSecretsClient)(nil).DeleteSecret), arg0)
 }
 
 // DeleteSecretRequest mocks base method
 func (m *MockSecretsClient) DeleteSecretRequest(arg0 *secretsmanager.DeleteSecretInput) (*request.Request, *secretsmanager.DeleteSecretOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteSecretRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.DeleteSecretOutput)
@@ -190,11 +211,13 @@ func (m *MockSecretsClient) DeleteSecretRequest(arg0 *secretsmanager.DeleteSecre
 
 // DeleteSecretRequest indicates an expected call of DeleteSecretRequest
 func (mr *MockSecretsClientMockRecorder) DeleteSecretRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSecretRequest", reflect.TypeOf((*MockSecretsClient)(nil).DeleteSecretRequest), arg0)
 }
 
 // DeleteSecretWithContext mocks base method
-func (m *MockSecretsClient) DeleteSecretWithContext(arg0 aws.Context, arg1 *secretsmanager.DeleteSecretInput, arg2 ...request.Option) (*secretsmanager.DeleteSecretOutput, error) {
+func (m *MockSecretsClient) DeleteSecretWithContext(arg0 context.Context, arg1 *secretsmanager.DeleteSecretInput, arg2 ...request.Option) (*secretsmanager.DeleteSecretOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -207,12 +230,14 @@ func (m *MockSecretsClient) DeleteSecretWithContext(arg0 aws.Context, arg1 *secr
 
 // DeleteSecretWithContext indicates an expected call of DeleteSecretWithContext
 func (mr *MockSecretsClientMockRecorder) DeleteSecretWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSecretWithContext", reflect.TypeOf((*MockSecretsClient)(nil).DeleteSecretWithContext), varargs...)
 }
 
 // DescribeSecret mocks base method
 func (m *MockSecretsClient) DescribeSecret(arg0 *secretsmanager.DescribeSecretInput) (*secretsmanager.DescribeSecretOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DescribeSecret", arg0)
 	ret0, _ := ret[0].(*secretsmanager.DescribeSecretOutput)
 	ret1, _ := ret[1].(error)
@@ -221,11 +246,13 @@ func (m *MockSecretsClient) DescribeSecret(arg0 *secretsmanager.DescribeSecretIn
 
 // DescribeSecret indicates an expected call of DescribeSecret
 func (mr *MockSecretsClientMockRecorder) DescribeSecret(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeSecret", reflect.TypeOf((*MockSecretsClient)(nil).DescribeSecret), arg0)
 }
 
 // DescribeSecretRequest mocks base method
 func (m *MockSecretsClient) DescribeSecretRequest(arg0 *secretsmanager.DescribeSecretInput) (*request.Request, *secretsmanager.DescribeSecretOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DescribeSecretRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.DescribeSecretOutput)
@@ -234,11 +261,13 @@ func (m *MockSecretsClient) DescribeSecretRequest(arg0 *secretsmanager.DescribeS
 
 // DescribeSecretRequest indicates an expected call of DescribeSecretRequest
 func (mr *MockSecretsClientMockRecorder) DescribeSecretRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeSecretRequest", reflect.TypeOf((*MockSecretsClient)(nil).DescribeSecretRequest), arg0)
 }
 
 // DescribeSecretWithContext mocks base method
-func (m *MockSecretsClient) DescribeSecretWithContext(arg0 aws.Context, arg1 *secretsmanager.DescribeSecretInput, arg2 ...request.Option) (*secretsmanager.DescribeSecretOutput, error) {
+func (m *MockSecretsClient) DescribeSecretWithContext(arg0 context.Context, arg1 *secretsmanager.DescribeSecretInput, arg2 ...request.Option) (*secretsmanager.DescribeSecretOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -251,12 +280,14 @@ func (m *MockSecretsClient) DescribeSecretWithContext(arg0 aws.Context, arg1 *se
 
 // DescribeSecretWithContext indicates an expected call of DescribeSecretWithContext
 func (mr *MockSecretsClientMockRecorder) DescribeSecretWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeSecretWithContext", reflect.TypeOf((*MockSecretsClient)(nil).DescribeSecretWithContext), varargs...)
 }
 
 // GetRandomPassword mocks base method
 func (m *MockSecretsClient) GetRandomPassword(arg0 *secretsmanager.GetRandomPasswordInput) (*secretsmanager.GetRandomPasswordOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetRandomPassword", arg0)
 	ret0, _ := ret[0].(*secretsmanager.GetRandomPasswordOutput)
 	ret1, _ := ret[1].(error)
@@ -265,11 +296,13 @@ func (m *MockSecretsClient) GetRandomPassword(arg0 *secretsmanager.GetRandomPass
 
 // GetRandomPassword indicates an expected call of GetRandomPassword
 func (mr *MockSecretsClientMockRecorder) GetRandomPassword(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRandomPassword", reflect.TypeOf((*MockSecretsClient)(nil).GetRandomPassword), arg0)
 }
 
 // GetRandomPasswordRequest mocks base method
 func (m *MockSecretsClient) GetRandomPasswordRequest(arg0 *secretsmanager.GetRandomPasswordInput) (*request.Request, *secretsmanager.GetRandomPasswordOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetRandomPasswordRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.GetRandomPasswordOutput)
@@ -278,11 +311,13 @@ func (m *MockSecretsClient) GetRandomPasswordRequest(arg0 *secretsmanager.GetRan
 
 // GetRandomPasswordRequest indicates an expected call of GetRandomPasswordRequest
 func (mr *MockSecretsClientMockRecorder) GetRandomPasswordRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRandomPasswordRequest", reflect.TypeOf((*MockSecretsClient)(nil).GetRandomPasswordRequest), arg0)
 }
 
 // GetRandomPasswordWithContext mocks base method
-func (m *MockSecretsClient) GetRandomPasswordWithContext(arg0 aws.Context, arg1 *secretsmanager.GetRandomPasswordInput, arg2 ...request.Option) (*secretsmanager.GetRandomPasswordOutput, error) {
+func (m *MockSecretsClient) GetRandomPasswordWithContext(arg0 context.Context, arg1 *secretsmanager.GetRandomPasswordInput, arg2 ...request.Option) (*secretsmanager.GetRandomPasswordOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -295,12 +330,14 @@ func (m *MockSecretsClient) GetRandomPasswordWithContext(arg0 aws.Context, arg1 
 
 // GetRandomPasswordWithContext indicates an expected call of GetRandomPasswordWithContext
 func (mr *MockSecretsClientMockRecorder) GetRandomPasswordWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRandomPasswordWithContext", reflect.TypeOf((*MockSecretsClient)(nil).GetRandomPasswordWithContext), varargs...)
 }
 
 // GetResourcePolicy mocks base method
 func (m *MockSecretsClient) GetResourcePolicy(arg0 *secretsmanager.GetResourcePolicyInput) (*secretsmanager.GetResourcePolicyOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetResourcePolicy", arg0)
 	ret0, _ := ret[0].(*secretsmanager.GetResourcePolicyOutput)
 	ret1, _ := ret[1].(error)
@@ -309,11 +346,13 @@ func (m *MockSecretsClient) GetResourcePolicy(arg0 *secretsmanager.GetResourcePo
 
 // GetResourcePolicy indicates an expected call of GetResourcePolicy
 func (mr *MockSecretsClientMockRecorder) GetResourcePolicy(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetResourcePolicy", reflect.TypeOf((*MockSecretsClient)(nil).GetResourcePolicy), arg0)
 }
 
 // GetResourcePolicyRequest mocks base method
 func (m *MockSecretsClient) GetResourcePolicyRequest(arg0 *secretsmanager.GetResourcePolicyInput) (*request.Request, *secretsmanager.GetResourcePolicyOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetResourcePolicyRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.GetResourcePolicyOutput)
@@ -322,11 +361,13 @@ func (m *MockSecretsClient) GetResourcePolicyRequest(arg0 *secretsmanager.GetRes
 
 // GetResourcePolicyRequest indicates an expected call of GetResourcePolicyRequest
 func (mr *MockSecretsClientMockRecorder) GetResourcePolicyRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetResourcePolicyRequest", reflect.TypeOf((*MockSecretsClient)(nil).GetResourcePolicyRequest), arg0)
 }
 
 // GetResourcePolicyWithContext mocks base method
-func (m *MockSecretsClient) GetResourcePolicyWithContext(arg0 aws.Context, arg1 *secretsmanager.GetResourcePolicyInput, arg2 ...request.Option) (*secretsmanager.GetResourcePolicyOutput, error) {
+func (m *MockSecretsClient) GetResourcePolicyWithContext(arg0 context.Context, arg1 *secretsmanager.GetResourcePolicyInput, arg2 ...request.Option) (*secretsmanager.GetResourcePolicyOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -339,12 +380,14 @@ func (m *MockSecretsClient) GetResourcePolicyWithContext(arg0 aws.Context, arg1 
 
 // GetResourcePolicyWithContext indicates an expected call of GetResourcePolicyWithContext
 func (mr *MockSecretsClientMockRecorder) GetResourcePolicyWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetResourcePolicyWithContext", reflect.TypeOf((*MockSecretsClient)(nil).GetResourcePolicyWithContext), varargs...)
 }
 
 // GetSecretValue mocks base method
 func (m *MockSecretsClient) GetSecretValue(arg0 *secretsmanager.GetSecretValueInput) (*secretsmanager.GetSecretValueOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetSecretValue", arg0)
 	ret0, _ := ret[0].(*secretsmanager.GetSecretValueOutput)
 	ret1, _ := ret[1].(error)
@@ -353,11 +396,13 @@ func (m *MockSecretsClient) GetSecretValue(arg0 *secretsmanager.GetSecretValueIn
 
 // GetSecretValue indicates an expected call of GetSecretValue
 func (mr *MockSecretsClientMockRecorder) GetSecretValue(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSecretValue", reflect.TypeOf((*MockSecretsClient)(nil).GetSecretValue), arg0)
 }
 
 // GetSecretValueRequest mocks base method
 func (m *MockSecretsClient) GetSecretValueRequest(arg0 *secretsmanager.GetSecretValueInput) (*request.Request, *secretsmanager.GetSecretValueOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetSecretValueRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.GetSecretValueOutput)
@@ -366,11 +411,13 @@ func (m *MockSecretsClient) GetSecretValueRequest(arg0 *secretsmanager.GetSecret
 
 // GetSecretValueRequest indicates an expected call of GetSecretValueRequest
 func (mr *MockSecretsClientMockRecorder) GetSecretValueRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSecretValueRequest", reflect.TypeOf((*MockSecretsClient)(nil).GetSecretValueRequest), arg0)
 }
 
 // GetSecretValueWithContext mocks base method
-func (m *MockSecretsClient) GetSecretValueWithContext(arg0 aws.Context, arg1 *secretsmanager.GetSecretValueInput, arg2 ...request.Option) (*secretsmanager.GetSecretValueOutput, error) {
+func (m *MockSecretsClient) GetSecretValueWithContext(arg0 context.Context, arg1 *secretsmanager.GetSecretValueInput, arg2 ...request.Option) (*secretsmanager.GetSecretValueOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -383,12 +430,14 @@ func (m *MockSecretsClient) GetSecretValueWithContext(arg0 aws.Context, arg1 *se
 
 // GetSecretValueWithContext indicates an expected call of GetSecretValueWithContext
 func (mr *MockSecretsClientMockRecorder) GetSecretValueWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSecretValueWithContext", reflect.TypeOf((*MockSecretsClient)(nil).GetSecretValueWithContext), varargs...)
 }
 
 // ListSecretVersionIds mocks base method
 func (m *MockSecretsClient) ListSecretVersionIds(arg0 *secretsmanager.ListSecretVersionIdsInput) (*secretsmanager.ListSecretVersionIdsOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListSecretVersionIds", arg0)
 	ret0, _ := ret[0].(*secretsmanager.ListSecretVersionIdsOutput)
 	ret1, _ := ret[1].(error)
@@ -397,11 +446,13 @@ func (m *MockSecretsClient) ListSecretVersionIds(arg0 *secretsmanager.ListSecret
 
 // ListSecretVersionIds indicates an expected call of ListSecretVersionIds
 func (mr *MockSecretsClientMockRecorder) ListSecretVersionIds(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecretVersionIds", reflect.TypeOf((*MockSecretsClient)(nil).ListSecretVersionIds), arg0)
 }
 
 // ListSecretVersionIdsPages mocks base method
 func (m *MockSecretsClient) ListSecretVersionIdsPages(arg0 *secretsmanager.ListSecretVersionIdsInput, arg1 func(*secretsmanager.ListSecretVersionIdsOutput, bool) bool) error {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListSecretVersionIdsPages", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
@@ -409,11 +460,13 @@ func (m *MockSecretsClient) ListSecretVersionIdsPages(arg0 *secretsmanager.ListS
 
 // ListSecretVersionIdsPages indicates an expected call of ListSecretVersionIdsPages
 func (mr *MockSecretsClientMockRecorder) ListSecretVersionIdsPages(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecretVersionIdsPages", reflect.TypeOf((*MockSecretsClient)(nil).ListSecretVersionIdsPages), arg0, arg1)
 }
 
 // ListSecretVersionIdsPagesWithContext mocks base method
-func (m *MockSecretsClient) ListSecretVersionIdsPagesWithContext(arg0 aws.Context, arg1 *secretsmanager.ListSecretVersionIdsInput, arg2 func(*secretsmanager.ListSecretVersionIdsOutput, bool) bool, arg3 ...request.Option) error {
+func (m *MockSecretsClient) ListSecretVersionIdsPagesWithContext(arg0 context.Context, arg1 *secretsmanager.ListSecretVersionIdsInput, arg2 func(*secretsmanager.ListSecretVersionIdsOutput, bool) bool, arg3 ...request.Option) error {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1, arg2}
 	for _, a := range arg3 {
 		varargs = append(varargs, a)
@@ -425,12 +478,14 @@ func (m *MockSecretsClient) ListSecretVersionIdsPagesWithContext(arg0 aws.Contex
 
 // ListSecretVersionIdsPagesWithContext indicates an expected call of ListSecretVersionIdsPagesWithContext
 func (mr *MockSecretsClientMockRecorder) ListSecretVersionIdsPagesWithContext(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecretVersionIdsPagesWithContext", reflect.TypeOf((*MockSecretsClient)(nil).ListSecretVersionIdsPagesWithContext), varargs...)
 }
 
 // ListSecretVersionIdsRequest mocks base method
 func (m *MockSecretsClient) ListSecretVersionIdsRequest(arg0 *secretsmanager.ListSecretVersionIdsInput) (*request.Request, *secretsmanager.ListSecretVersionIdsOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListSecretVersionIdsRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.ListSecretVersionIdsOutput)
@@ -439,11 +494,13 @@ func (m *MockSecretsClient) ListSecretVersionIdsRequest(arg0 *secretsmanager.Lis
 
 // ListSecretVersionIdsRequest indicates an expected call of ListSecretVersionIdsRequest
 func (mr *MockSecretsClientMockRecorder) ListSecretVersionIdsRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecretVersionIdsRequest", reflect.TypeOf((*MockSecretsClient)(nil).ListSecretVersionIdsRequest), arg0)
 }
 
 // ListSecretVersionIdsWithContext mocks base method
-func (m *MockSecretsClient) ListSecretVersionIdsWithContext(arg0 aws.Context, arg1 *secretsmanager.ListSecretVersionIdsInput, arg2 ...request.Option) (*secretsmanager.ListSecretVersionIdsOutput, error) {
+func (m *MockSecretsClient) ListSecretVersionIdsWithContext(arg0 context.Context, arg1 *secretsmanager.ListSecretVersionIdsInput, arg2 ...request.Option) (*secretsmanager.ListSecretVersionIdsOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -456,12 +513,14 @@ func (m *MockSecretsClient) ListSecretVersionIdsWithContext(arg0 aws.Context, ar
 
 // ListSecretVersionIdsWithContext indicates an expected call of ListSecretVersionIdsWithContext
 func (mr *MockSecretsClientMockRecorder) ListSecretVersionIdsWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecretVersionIdsWithContext", reflect.TypeOf((*MockSecretsClient)(nil).ListSecretVersionIdsWithContext), varargs...)
 }
 
 // ListSecrets mocks base method
 func (m *MockSecretsClient) ListSecrets(arg0 *secretsmanager.ListSecretsInput) (*secretsmanager.ListSecretsOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListSecrets", arg0)
 	ret0, _ := ret[0].(*secretsmanager.ListSecretsOutput)
 	ret1, _ := ret[1].(error)
@@ -470,11 +529,13 @@ func (m *MockSecretsClient) ListSecrets(arg0 *secretsmanager.ListSecretsInput) (
 
 // ListSecrets indicates an expected call of ListSecrets
 func (mr *MockSecretsClientMockRecorder) ListSecrets(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecrets", reflect.TypeOf((*MockSecretsClient)(nil).ListSecrets), arg0)
 }
 
 // ListSecretsPages mocks base method
 func (m *MockSecretsClient) ListSecretsPages(arg0 *secretsmanager.ListSecretsInput, arg1 func(*secretsmanager.ListSecretsOutput, bool) bool) error {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListSecretsPages", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
@@ -482,11 +543,13 @@ func (m *MockSecretsClient) ListSecretsPages(arg0 *secretsmanager.ListSecretsInp
 
 // ListSecretsPages indicates an expected call of ListSecretsPages
 func (mr *MockSecretsClientMockRecorder) ListSecretsPages(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecretsPages", reflect.TypeOf((*MockSecretsClient)(nil).ListSecretsPages), arg0, arg1)
 }
 
 // ListSecretsPagesWithContext mocks base method
-func (m *MockSecretsClient) ListSecretsPagesWithContext(arg0 aws.Context, arg1 *secretsmanager.ListSecretsInput, arg2 func(*secretsmanager.ListSecretsOutput, bool) bool, arg3 ...request.Option) error {
+func (m *MockSecretsClient) ListSecretsPagesWithContext(arg0 context.Context, arg1 *secretsmanager.ListSecretsInput, arg2 func(*secretsmanager.ListSecretsOutput, bool) bool, arg3 ...request.Option) error {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1, arg2}
 	for _, a := range arg3 {
 		varargs = append(varargs, a)
@@ -498,12 +561,14 @@ func (m *MockSecretsClient) ListSecretsPagesWithContext(arg0 aws.Context, arg1 *
 
 // ListSecretsPagesWithContext indicates an expected call of ListSecretsPagesWithContext
 func (mr *MockSecretsClientMockRecorder) ListSecretsPagesWithContext(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecretsPagesWithContext", reflect.TypeOf((*MockSecretsClient)(nil).ListSecretsPagesWithContext), varargs...)
 }
 
 // ListSecretsRequest mocks base method
 func (m *MockSecretsClient) ListSecretsRequest(arg0 *secretsmanager.ListSecretsInput) (*request.Request, *secretsmanager.ListSecretsOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListSecretsRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.ListSecretsOutput)
@@ -512,11 +577,13 @@ func (m *MockSecretsClient) ListSecretsRequest(arg0 *secretsmanager.ListSecretsI
 
 // ListSecretsRequest indicates an expected call of ListSecretsRequest
 func (mr *MockSecretsClientMockRecorder) ListSecretsRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecretsRequest", reflect.TypeOf((*MockSecretsClient)(nil).ListSecretsRequest), arg0)
 }
 
 // ListSecretsWithContext mocks base method
-func (m *MockSecretsClient) ListSecretsWithContext(arg0 aws.Context, arg1 *secretsmanager.ListSecretsInput, arg2 ...request.Option) (*secretsmanager.ListSecretsOutput, error) {
+func (m *MockSecretsClient) ListSecretsWithContext(arg0 context.Context, arg1 *secretsmanager.ListSecretsInput, arg2 ...request.Option) (*secretsmanager.ListSecretsOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -529,12 +596,14 @@ func (m *MockSecretsClient) ListSecretsWithContext(arg0 aws.Context, arg1 *secre
 
 // ListSecretsWithContext indicates an expected call of ListSecretsWithContext
 func (mr *MockSecretsClientMockRecorder) ListSecretsWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSecretsWithContext", reflect.TypeOf((*MockSecretsClient)(nil).ListSecretsWithContext), varargs...)
 }
 
 // PutResourcePolicy mocks base method
 func (m *MockSecretsClient) PutResourcePolicy(arg0 *secretsmanager.PutResourcePolicyInput) (*secretsmanager.PutResourcePolicyOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PutResourcePolicy", arg0)
 	ret0, _ := ret[0].(*secretsmanager.PutResourcePolicyOutput)
 	ret1, _ := ret[1].(error)
@@ -543,11 +612,13 @@ func (m *MockSecretsClient) PutResourcePolicy(arg0 *secretsmanager.PutResourcePo
 
 // PutResourcePolicy indicates an expected call of PutResourcePolicy
 func (mr *MockSecretsClientMockRecorder) PutResourcePolicy(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PutResourcePolicy", reflect.TypeOf((*MockSecretsClient)(nil).PutResourcePolicy), arg0)
 }
 
 // PutResourcePolicyRequest mocks base method
 func (m *MockSecretsClient) PutResourcePolicyRequest(arg0 *secretsmanager.PutResourcePolicyInput) (*request.Request, *secretsmanager.PutResourcePolicyOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PutResourcePolicyRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.PutResourcePolicyOutput)
@@ -556,11 +627,13 @@ func (m *MockSecretsClient) PutResourcePolicyRequest(arg0 *secretsmanager.PutRes
 
 // PutResourcePolicyRequest indicates an expected call of PutResourcePolicyRequest
 func (mr *MockSecretsClientMockRecorder) PutResourcePolicyRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PutResourcePolicyRequest", reflect.TypeOf((*MockSecretsClient)(nil).PutResourcePolicyRequest), arg0)
 }
 
 // PutResourcePolicyWithContext mocks base method
-func (m *MockSecretsClient) PutResourcePolicyWithContext(arg0 aws.Context, arg1 *secretsmanager.PutResourcePolicyInput, arg2 ...request.Option) (*secretsmanager.PutResourcePolicyOutput, error) {
+func (m *MockSecretsClient) PutResourcePolicyWithContext(arg0 context.Context, arg1 *secretsmanager.PutResourcePolicyInput, arg2 ...request.Option) (*secretsmanager.PutResourcePolicyOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -573,12 +646,14 @@ func (m *MockSecretsClient) PutResourcePolicyWithContext(arg0 aws.Context, arg1 
 
 // PutResourcePolicyWithContext indicates an expected call of PutResourcePolicyWithContext
 func (mr *MockSecretsClientMockRecorder) PutResourcePolicyWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PutResourcePolicyWithContext", reflect.TypeOf((*MockSecretsClient)(nil).PutResourcePolicyWithContext), varargs...)
 }
 
 // PutSecretValue mocks base method
 func (m *MockSecretsClient) PutSecretValue(arg0 *secretsmanager.PutSecretValueInput) (*secretsmanager.PutSecretValueOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PutSecretValue", arg0)
 	ret0, _ := ret[0].(*secretsmanager.PutSecretValueOutput)
 	ret1, _ := ret[1].(error)
@@ -587,11 +662,13 @@ func (m *MockSecretsClient) PutSecretValue(arg0 *secretsmanager.PutSecretValueIn
 
 // PutSecretValue indicates an expected call of PutSecretValue
 func (mr *MockSecretsClientMockRecorder) PutSecretValue(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PutSecretValue", reflect.TypeOf((*MockSecretsClient)(nil).PutSecretValue), arg0)
 }
 
 // PutSecretValueRequest mocks base method
 func (m *MockSecretsClient) PutSecretValueRequest(arg0 *secretsmanager.PutSecretValueInput) (*request.Request, *secretsmanager.PutSecretValueOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PutSecretValueRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.PutSecretValueOutput)
@@ -600,11 +677,13 @@ func (m *MockSecretsClient) PutSecretValueRequest(arg0 *secretsmanager.PutSecret
 
 // PutSecretValueRequest indicates an expected call of PutSecretValueRequest
 func (mr *MockSecretsClientMockRecorder) PutSecretValueRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PutSecretValueRequest", reflect.TypeOf((*MockSecretsClient)(nil).PutSecretValueRequest), arg0)
 }
 
 // PutSecretValueWithContext mocks base method
-func (m *MockSecretsClient) PutSecretValueWithContext(arg0 aws.Context, arg1 *secretsmanager.PutSecretValueInput, arg2 ...request.Option) (*secretsmanager.PutSecretValueOutput, error) {
+func (m *MockSecretsClient) PutSecretValueWithContext(arg0 context.Context, arg1 *secretsmanager.PutSecretValueInput, arg2 ...request.Option) (*secretsmanager.PutSecretValueOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -617,12 +696,14 @@ func (m *MockSecretsClient) PutSecretValueWithContext(arg0 aws.Context, arg1 *se
 
 // PutSecretValueWithContext indicates an expected call of PutSecretValueWithContext
 func (mr *MockSecretsClientMockRecorder) PutSecretValueWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PutSecretValueWithContext", reflect.TypeOf((*MockSecretsClient)(nil).PutSecretValueWithContext), varargs...)
 }
 
 // RestoreSecret mocks base method
 func (m *MockSecretsClient) RestoreSecret(arg0 *secretsmanager.RestoreSecretInput) (*secretsmanager.RestoreSecretOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RestoreSecret", arg0)
 	ret0, _ := ret[0].(*secretsmanager.RestoreSecretOutput)
 	ret1, _ := ret[1].(error)
@@ -631,11 +712,13 @@ func (m *MockSecretsClient) RestoreSecret(arg0 *secretsmanager.RestoreSecretInpu
 
 // RestoreSecret indicates an expected call of RestoreSecret
 func (mr *MockSecretsClientMockRecorder) RestoreSecret(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RestoreSecret", reflect.TypeOf((*MockSecretsClient)(nil).RestoreSecret), arg0)
 }
 
 // RestoreSecretRequest mocks base method
 func (m *MockSecretsClient) RestoreSecretRequest(arg0 *secretsmanager.RestoreSecretInput) (*request.Request, *secretsmanager.RestoreSecretOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RestoreSecretRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.RestoreSecretOutput)
@@ -644,11 +727,13 @@ func (m *MockSecretsClient) RestoreSecretRequest(arg0 *secretsmanager.RestoreSec
 
 // RestoreSecretRequest indicates an expected call of RestoreSecretRequest
 func (mr *MockSecretsClientMockRecorder) RestoreSecretRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RestoreSecretRequest", reflect.TypeOf((*MockSecretsClient)(nil).RestoreSecretRequest), arg0)
 }
 
 // RestoreSecretWithContext mocks base method
-func (m *MockSecretsClient) RestoreSecretWithContext(arg0 aws.Context, arg1 *secretsmanager.RestoreSecretInput, arg2 ...request.Option) (*secretsmanager.RestoreSecretOutput, error) {
+func (m *MockSecretsClient) RestoreSecretWithContext(arg0 context.Context, arg1 *secretsmanager.RestoreSecretInput, arg2 ...request.Option) (*secretsmanager.RestoreSecretOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -661,12 +746,14 @@ func (m *MockSecretsClient) RestoreSecretWithContext(arg0 aws.Context, arg1 *sec
 
 // RestoreSecretWithContext indicates an expected call of RestoreSecretWithContext
 func (mr *MockSecretsClientMockRecorder) RestoreSecretWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RestoreSecretWithContext", reflect.TypeOf((*MockSecretsClient)(nil).RestoreSecretWithContext), varargs...)
 }
 
 // RotateSecret mocks base method
 func (m *MockSecretsClient) RotateSecret(arg0 *secretsmanager.RotateSecretInput) (*secretsmanager.RotateSecretOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RotateSecret", arg0)
 	ret0, _ := ret[0].(*secretsmanager.RotateSecretOutput)
 	ret1, _ := ret[1].(error)
@@ -675,11 +762,13 @@ func (m *MockSecretsClient) RotateSecret(arg0 *secretsmanager.RotateSecretInput)
 
 // RotateSecret indicates an expected call of RotateSecret
 func (mr *MockSecretsClientMockRecorder) RotateSecret(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RotateSecret", reflect.TypeOf((*MockSecretsClient)(nil).RotateSecret), arg0)
 }
 
 // RotateSecretRequest mocks base method
 func (m *MockSecretsClient) RotateSecretRequest(arg0 *secretsmanager.RotateSecretInput) (*request.Request, *secretsmanager.RotateSecretOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RotateSecretRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.RotateSecretOutput)
@@ -688,11 +777,13 @@ func (m *MockSecretsClient) RotateSecretRequest(arg0 *secretsmanager.RotateSecre
 
 // RotateSecretRequest indicates an expected call of RotateSecretRequest
 func (mr *MockSecretsClientMockRecorder) RotateSecretRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RotateSecretRequest", reflect.TypeOf((*MockSecretsClient)(nil).RotateSecretRequest), arg0)
 }
 
 // RotateSecretWithContext mocks base method
-func (m *MockSecretsClient) RotateSecretWithContext(arg0 aws.Context, arg1 *secretsmanager.RotateSecretInput, arg2 ...request.Option) (*secretsmanager.RotateSecretOutput, error) {
+func (m *MockSecretsClient) RotateSecretWithContext(arg0 context.Context, arg1 *secretsmanager.RotateSecretInput, arg2 ...request.Option) (*secretsmanager.RotateSecretOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -705,12 +796,14 @@ func (m *MockSecretsClient) RotateSecretWithContext(arg0 aws.Context, arg1 *secr
 
 // RotateSecretWithContext indicates an expected call of RotateSecretWithContext
 func (mr *MockSecretsClientMockRecorder) RotateSecretWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RotateSecretWithContext", reflect.TypeOf((*MockSecretsClient)(nil).RotateSecretWithContext), varargs...)
 }
 
 // TagResource mocks base method
 func (m *MockSecretsClient) TagResource(arg0 *secretsmanager.TagResourceInput) (*secretsmanager.TagResourceOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "TagResource", arg0)
 	ret0, _ := ret[0].(*secretsmanager.TagResourceOutput)
 	ret1, _ := ret[1].(error)
@@ -719,11 +812,13 @@ func (m *MockSecretsClient) TagResource(arg0 *secretsmanager.TagResourceInput) (
 
 // TagResource indicates an expected call of TagResource
 func (mr *MockSecretsClientMockRecorder) TagResource(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TagResource", reflect.TypeOf((*MockSecretsClient)(nil).TagResource), arg0)
 }
 
 // TagResourceRequest mocks base method
 func (m *MockSecretsClient) TagResourceRequest(arg0 *secretsmanager.TagResourceInput) (*request.Request, *secretsmanager.TagResourceOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "TagResourceRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.TagResourceOutput)
@@ -732,11 +827,13 @@ func (m *MockSecretsClient) TagResourceRequest(arg0 *secretsmanager.TagResourceI
 
 // TagResourceRequest indicates an expected call of TagResourceRequest
 func (mr *MockSecretsClientMockRecorder) TagResourceRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TagResourceRequest", reflect.TypeOf((*MockSecretsClient)(nil).TagResourceRequest), arg0)
 }
 
 // TagResourceWithContext mocks base method
-func (m *MockSecretsClient) TagResourceWithContext(arg0 aws.Context, arg1 *secretsmanager.TagResourceInput, arg2 ...request.Option) (*secretsmanager.TagResourceOutput, error) {
+func (m *MockSecretsClient) TagResourceWithContext(arg0 context.Context, arg1 *secretsmanager.TagResourceInput, arg2 ...request.Option) (*secretsmanager.TagResourceOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -749,12 +846,14 @@ func (m *MockSecretsClient) TagResourceWithContext(arg0 aws.Context, arg1 *secre
 
 // TagResourceWithContext indicates an expected call of TagResourceWithContext
 func (mr *MockSecretsClientMockRecorder) TagResourceWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TagResourceWithContext", reflect.TypeOf((*MockSecretsClient)(nil).TagResourceWithContext), varargs...)
 }
 
 // UntagResource mocks base method
 func (m *MockSecretsClient) UntagResource(arg0 *secretsmanager.UntagResourceInput) (*secretsmanager.UntagResourceOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UntagResource", arg0)
 	ret0, _ := ret[0].(*secretsmanager.UntagResourceOutput)
 	ret1, _ := ret[1].(error)
@@ -763,11 +862,13 @@ func (m *MockSecretsClient) UntagResource(arg0 *secretsmanager.UntagResourceInpu
 
 // UntagResource indicates an expected call of UntagResource
 func (mr *MockSecretsClientMockRecorder) UntagResource(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UntagResource", reflect.TypeOf((*MockSecretsClient)(nil).UntagResource), arg0)
 }
 
 // UntagResourceRequest mocks base method
 func (m *MockSecretsClient) UntagResourceRequest(arg0 *secretsmanager.UntagResourceInput) (*request.Request, *secretsmanager.UntagResourceOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UntagResourceRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.UntagResourceOutput)
@@ -776,11 +877,13 @@ func (m *MockSecretsClient) UntagResourceRequest(arg0 *secretsmanager.UntagResou
 
 // UntagResourceRequest indicates an expected call of UntagResourceRequest
 func (mr *MockSecretsClientMockRecorder) UntagResourceRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UntagResourceRequest", reflect.TypeOf((*MockSecretsClient)(nil).UntagResourceRequest), arg0)
 }
 
 // UntagResourceWithContext mocks base method
-func (m *MockSecretsClient) UntagResourceWithContext(arg0 aws.Context, arg1 *secretsmanager.UntagResourceInput, arg2 ...request.Option) (*secretsmanager.UntagResourceOutput, error) {
+func (m *MockSecretsClient) UntagResourceWithContext(arg0 context.Context, arg1 *secretsmanager.UntagResourceInput, arg2 ...request.Option) (*secretsmanager.UntagResourceOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -793,12 +896,14 @@ func (m *MockSecretsClient) UntagResourceWithContext(arg0 aws.Context, arg1 *sec
 
 // UntagResourceWithContext indicates an expected call of UntagResourceWithContext
 func (mr *MockSecretsClientMockRecorder) UntagResourceWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UntagResourceWithContext", reflect.TypeOf((*MockSecretsClient)(nil).UntagResourceWithContext), varargs...)
 }
 
 // UpdateSecret mocks base method
 func (m *MockSecretsClient) UpdateSecret(arg0 *secretsmanager.UpdateSecretInput) (*secretsmanager.UpdateSecretOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateSecret", arg0)
 	ret0, _ := ret[0].(*secretsmanager.UpdateSecretOutput)
 	ret1, _ := ret[1].(error)
@@ -807,11 +912,13 @@ func (m *MockSecretsClient) UpdateSecret(arg0 *secretsmanager.UpdateSecretInput)
 
 // UpdateSecret indicates an expected call of UpdateSecret
 func (mr *MockSecretsClientMockRecorder) UpdateSecret(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSecret", reflect.TypeOf((*MockSecretsClient)(nil).UpdateSecret), arg0)
 }
 
 // UpdateSecretRequest mocks base method
 func (m *MockSecretsClient) UpdateSecretRequest(arg0 *secretsmanager.UpdateSecretInput) (*request.Request, *secretsmanager.UpdateSecretOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateSecretRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.UpdateSecretOutput)
@@ -820,11 +927,13 @@ func (m *MockSecretsClient) UpdateSecretRequest(arg0 *secretsmanager.UpdateSecre
 
 // UpdateSecretRequest indicates an expected call of UpdateSecretRequest
 func (mr *MockSecretsClientMockRecorder) UpdateSecretRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSecretRequest", reflect.TypeOf((*MockSecretsClient)(nil).UpdateSecretRequest), arg0)
 }
 
 // UpdateSecretVersionStage mocks base method
 func (m *MockSecretsClient) UpdateSecretVersionStage(arg0 *secretsmanager.UpdateSecretVersionStageInput) (*secretsmanager.UpdateSecretVersionStageOutput, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateSecretVersionStage", arg0)
 	ret0, _ := ret[0].(*secretsmanager.UpdateSecretVersionStageOutput)
 	ret1, _ := ret[1].(error)
@@ -833,11 +942,13 @@ func (m *MockSecretsClient) UpdateSecretVersionStage(arg0 *secretsmanager.Update
 
 // UpdateSecretVersionStage indicates an expected call of UpdateSecretVersionStage
 func (mr *MockSecretsClientMockRecorder) UpdateSecretVersionStage(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSecretVersionStage", reflect.TypeOf((*MockSecretsClient)(nil).UpdateSecretVersionStage), arg0)
 }
 
 // UpdateSecretVersionStageRequest mocks base method
 func (m *MockSecretsClient) UpdateSecretVersionStageRequest(arg0 *secretsmanager.UpdateSecretVersionStageInput) (*request.Request, *secretsmanager.UpdateSecretVersionStageOutput) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateSecretVersionStageRequest", arg0)
 	ret0, _ := ret[0].(*request.Request)
 	ret1, _ := ret[1].(*secretsmanager.UpdateSecretVersionStageOutput)
@@ -846,11 +957,13 @@ func (m *MockSecretsClient) UpdateSecretVersionStageRequest(arg0 *secretsmanager
 
 // UpdateSecretVersionStageRequest indicates an expected call of UpdateSecretVersionStageRequest
 func (mr *MockSecretsClientMockRecorder) UpdateSecretVersionStageRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSecretVersionStageRequest", reflect.TypeOf((*MockSecretsClient)(nil).UpdateSecretVersionStageRequest), arg0)
 }
 
 // UpdateSecretVersionStageWithContext mocks base method
-func (m *MockSecretsClient) UpdateSecretVersionStageWithContext(arg0 aws.Context, arg1 *secretsmanager.UpdateSecretVersionStageInput, arg2 ...request.Option) (*secretsmanager.UpdateSecretVersionStageOutput, error) {
+func (m *MockSecretsClient) UpdateSecretVersionStageWithContext(arg0 context.Context, arg1 *secretsmanager.UpdateSecretVersionStageInput, arg2 ...request.Option) (*secretsmanager.UpdateSecretVersionStageOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -863,12 +976,14 @@ func (m *MockSecretsClient) UpdateSecretVersionStageWithContext(arg0 aws.Context
 
 // UpdateSecretVersionStageWithContext indicates an expected call of UpdateSecretVersionStageWithContext
 func (mr *MockSecretsClientMockRecorder) UpdateSecretVersionStageWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSecretVersionStageWithContext", reflect.TypeOf((*MockSecretsClient)(nil).UpdateSecretVersionStageWithContext), varargs...)
 }
 
 // UpdateSecretWithContext mocks base method
-func (m *MockSecretsClient) UpdateSecretWithContext(arg0 aws.Context, arg1 *secretsmanager.UpdateSecretInput, arg2 ...request.Option) (*secretsmanager.UpdateSecretOutput, error) {
+func (m *MockSecretsClient) UpdateSecretWithContext(arg0 context.Context, arg1 *secretsmanager.UpdateSecretInput, arg2 ...request.Option) (*secretsmanager.UpdateSecretOutput, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
@@ -881,6 +996,57 @@ func (m *MockSecretsClient) UpdateSecretWithContext(arg0 aws.Context, arg1 *secr
 
 // UpdateSecretWithContext indicates an expected call of UpdateSecretWithContext
 func (mr *MockSecretsClientMockRecorder) UpdateSecretWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSecretWithContext", reflect.TypeOf((*MockSecretsClient)(nil).UpdateSecretWithContext), varargs...)
+}
+
+// ValidateResourcePolicy mocks base method
+func (m *MockSecretsClient) ValidateResourcePolicy(arg0 *secretsmanager.ValidateResourcePolicyInput) (*secretsmanager.ValidateResourcePolicyOutput, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ValidateResourcePolicy", arg0)
+	ret0, _ := ret[0].(*secretsmanager.ValidateResourcePolicyOutput)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ValidateResourcePolicy indicates an expected call of ValidateResourcePolicy
+func (mr *MockSecretsClientMockRecorder) ValidateResourcePolicy(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateResourcePolicy", reflect.TypeOf((*MockSecretsClient)(nil).ValidateResourcePolicy), arg0)
+}
+
+// ValidateResourcePolicyRequest mocks base method
+func (m *MockSecretsClient) ValidateResourcePolicyRequest(arg0 *secretsmanager.ValidateResourcePolicyInput) (*request.Request, *secretsmanager.ValidateResourcePolicyOutput) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ValidateResourcePolicyRequest", arg0)
+	ret0, _ := ret[0].(*request.Request)
+	ret1, _ := ret[1].(*secretsmanager.ValidateResourcePolicyOutput)
+	return ret0, ret1
+}
+
+// ValidateResourcePolicyRequest indicates an expected call of ValidateResourcePolicyRequest
+func (mr *MockSecretsClientMockRecorder) ValidateResourcePolicyRequest(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateResourcePolicyRequest", reflect.TypeOf((*MockSecretsClient)(nil).ValidateResourcePolicyRequest), arg0)
+}
+
+// ValidateResourcePolicyWithContext mocks base method
+func (m *MockSecretsClient) ValidateResourcePolicyWithContext(arg0 context.Context, arg1 *secretsmanager.ValidateResourcePolicyInput, arg2 ...request.Option) (*secretsmanager.ValidateResourcePolicyOutput, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{arg0, arg1}
+	for _, a := range arg2 {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ValidateResourcePolicyWithContext", varargs...)
+	ret0, _ := ret[0].(*secretsmanager.ValidateResourcePolicyOutput)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ValidateResourcePolicyWithContext indicates an expected call of ValidateResourcePolicyWithContext
+func (mr *MockSecretsClientMockRecorder) ValidateResourcePolicyWithContext(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{arg0, arg1}, arg2...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateResourcePolicyWithContext", reflect.TypeOf((*MockSecretsClient)(nil).ValidateResourcePolicyWithContext), varargs...)
 }
