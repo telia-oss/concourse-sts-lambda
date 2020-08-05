@@ -13,8 +13,9 @@ type Configuration struct {
 
 // Team represents the configuration for a single team.
 type Team struct {
-	Name     string     `json:"name"`
-	Accounts []*Account `json:"accounts"`
+	Name       string            `json:"name"`
+	Accounts   []*Account        `json:"accounts"`
+	SecretTags map[string]string `json:"secretTags"`
 }
 
 // Account represents the configuration for an assumable role.

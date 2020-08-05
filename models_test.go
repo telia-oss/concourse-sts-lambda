@@ -28,7 +28,10 @@ func TestConfig(t *testing.T) {
 	    "name": "account2",
 	    "roleArn": "role2",
 		"duration": 4000
-	}]
+	}],
+	"secretTags": {
+		"Team": "team"
+	}
 }
 `),
 			expected: handler.Team{
@@ -44,6 +47,9 @@ func TestConfig(t *testing.T) {
 						RoleArn:  "role2",
 						Duration: 4000,
 					},
+				},
+				SecretTags: map[string]string{
+					"Team": "team",
 				},
 			},
 		},
